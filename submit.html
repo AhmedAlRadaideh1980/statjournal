@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Manuscript - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Form Styles */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .required:after {
+            content: " *";
+            color: var(--accent);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 2rem;
+            text-align: center;
+            transition: border 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--secondary);
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        .file-upload p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox-group input {
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        /* Login Styles */
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .auth-tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .orcid-btn {
+            background-color: #a6ce39;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .orcid-btn:hover {
+            background-color: #94b833;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .divider:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider span {
+            background-color: white;
+            padding: 0 1rem;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="ai-policy.html">AI Policy</a></li>
+                        <li><a href="submit.html" class="active">Submit</a></li>
+                        <li><a href="archives.html">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Submit Manuscript</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Submit Manuscript</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Submit Content -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Submission Portal</h2>
+                <p>Submit your manuscript for consideration in AI-Stat Journal</p>
+            </div>
+            
+            <!-- Login/Register Section -->
+            <div class="form-container login-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="register">Register</button>
+                </div>
+                
+                <div class="auth-form active" id="login-form">
+                    <div class="form-group">
+                        <label for="login-email" class="required">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password" class="required">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-block">Login</button>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-block orcid-btn">
+                            <i class="fab fa-orcid"></i> Login with ORCID
+                        </button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <a href="#">Forgot your password?</a>
+                    </div>
+                </div>
+                
+                <div class="auth-form" id="register-form">
+                    <div class="form-group">
+                        <label for="register-name" class="required">Full Name</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-email" class="required">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password" class="required">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-confirm" class="required">Confirm Password</label>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-block">Register</button>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-block orcid-btn">
+                            <i class="fab fa-orcid"></i> Register with ORCID
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submission Form (Initially Hidden) -->
+            <div class="form-container" id="submission-form" style="display: none;">
+                <div class="form-section">
+                    <h3>Manuscript Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="manuscript-title" class="required">Title</label>
+                        <input type="text" id="manuscript-title" placeholder="Enter manuscript title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="manuscript-abstract" class="required">Abstract</label>
+                        <textarea id="manuscript-abstract" placeholder="Enter abstract (250 words maximum)" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="manuscript-keywords" class="required">Keywords</label>
+                        <input type="text" id="manuscript-keywords" placeholder="Enter 3-5 keywords separated by commas" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="manuscript-type" class="required">Manuscript Type</label>
+                        <select id="manuscript-type" required>
+                            <option value="">Select manuscript type</option>
+                            <option value="research">Research Article</option>
+                            <option value="review">Review Article</option>
+                            <option value="methodology">Methodology Paper</option>
+                            <option value="case-study">Case Study</option>
+                            <option value="short-communication">Short Communication</option>
+                            <option value="software">Software Paper</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Author Information</h3>
+                    
+                    <div id="author-fields">
+                        <div class="author-entry">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="required">First Name</label>
+                                    <input type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required">Last Name</label>
+                                    <input type="text" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required">Affiliation</label>
+                                <input type="text" placeholder="University/Institution" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>ORCID iD (Optional)</label>
+                                <input type="text" placeholder="0000-0000-0000-0000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="required">Email</label>
+                                <input type="email" required>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="corresponding-author">
+                                <label for="corresponding-author">Corresponding Author</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn" id="add-author" style="background-color: var(--success);">
+                        <i class="fas fa-plus"></i> Add Another Author
+                    </button>
+                </div>
+                
+                <div class="form-section">
+                    <h3>AI Co-Authorship Declaration</h3>
+                    
+                    <div class="form-group">
+                        <label>Did you use AI tools in the preparation of this manuscript?</label>
+                        <div style="display: flex; gap: 1rem;">
+                            <div class="checkbox-group">
+                                <input type="radio" id="ai-yes" name="ai-use" value="yes">
+                                <label for="ai-yes">Yes</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="radio" id="ai-no" name="ai-use" value="no" checked>
+                                <label for="ai-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="ai-details" style="display: none;">
+                        <div class="form-group">
+                            <label class="required">AI Model(s) Used</label>
+                            <input type="text" placeholder="e.g., ChatGPT-5, Claude 3, Gemini 2">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required">AI Contribution Description</label>
+                            <textarea placeholder="Describe how AI was used in research design, analysis, writing, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required">AI Model Provider and Version</label>
+                            <input type="text" placeholder="e.g., OpenAI, October 2025">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>File Upload</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Manuscript File</label>
+                        <div class="file-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop your manuscript file here or click to browse</p>
+                            <p>Accepted formats: PDF, DOC, DOCX</p>
+                            <input type="file" style="display: none;" id="manuscript-file">
+                            <button type="button" class="btn" onclick="document.getElementById('manuscript-file').click()">Select File</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Supplementary Materials (Optional)</label>
+                        <div class="file-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop supplementary files here or click to browse</p>
+                            <p>Accepted formats: ZIP, R, Python, CSV, XLSX</p>
+                            <input type="file" style="display: none;" id="supplementary-files" multiple>
+                            <button type="button" class="btn" onclick="document.getElementById('supplementary-files').click()">Select Files</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Ethics and Compliance</h3>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ethics-compliance" required>
+                        <label for="ethics-compliance" class="required">I confirm that this manuscript is original work, has not been published previously, and is not under consideration elsewhere.</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ai-disclosure" required>
+                        <label for="ai-disclosure" class="required">I have properly disclosed all AI assistance as per the journal's AI Co-Authorship Policy.</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="data-availability" required>
+                        <label for="data-availability" class="required">I confirm that data and code supporting the findings are available as per journal requirements.</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="conflict-interest" required>
+                        <label for="conflict-interest" class="required">I have disclosed any potential conflicts of interest.</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block">Submit Manuscript</button>
+                </div>
+            </div>
+            
+            <!-- Submission Guidelines -->
+            <div class="form-container">
+                <h3>Submission Guidelines</h3>
+                <ul>
+                    <li>Ensure your manuscript follows our formatting guidelines before submission</li>
+                    <li>All manuscripts undergo plagiarism screening using iThenticate</li>
+                    <li>Include 3-5 relevant keywords for indexing</li>
+                    <li>Maximum abstract length is 250 words</li>
+                    <li>Declare all AI assistance as per our AI Co-Authorship Policy</li>
+                    <li>Expected review timeline: 4-6 weeks</li>
+                </ul>
+                
+                <p>Need help with your submission? <a href="contact.html">Contact our editorial office</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Auth tabs
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and forms
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding form
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab') + '-form').classList.add('active');
+            });
+        });
+
+        // Show submission form after login (demo purpose)
+        document.querySelector('#login-form .btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('submission-form').style.display = 'block';
+            document.querySelector('.login-container').style.display = 'none';
+        });
+
+        // AI declaration toggle
+        document.getElementById('ai-yes').addEventListener('change', function() {
+            document.getElementById('ai-details').style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('ai-no').addEventListener('change', function() {
+            document.getElementById('ai-details').style.display = this.checked ? 'none' : 'block';
+        });
+
+        // Add author functionality
+        document.getElementById('add-author').addEventListener('click', function() {
+            const authorFields = document.getElementById('author-fields');
+            const newAuthor = document.createElement('div');
+            newAuthor.className = 'author-entry';
+            newAuthor.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="required">First Name</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Last Name</label>
+                        <input type="text" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="required">Affiliation</label>
+                    <input type="text" placeholder="University/Institution" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>ORCID iD (Optional)</label>
+                    <input type="text" placeholder="0000-0000-0000-0000">
+                </div>
+                
+                <div class="form-group">
+                    <label class="required">Email</label>
+                    <input type="email" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox">
+                    <label>Corresponding Author</label>
+                </div>
+                
+                <button type="button" class="btn" style="background-color: var(--accent);" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i> Remove Author
+                </button>
+            `;
+            authorFields.appendChild(newAuthor);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+ai-stat-journal/
+├── index.html (already created)
+├── about.html
+├── editorial-board.html
+├── ai-policy.html
+├── submit.html
+├── reviewers.html
+├── archives.html
+└── contact.html

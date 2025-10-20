@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Co-Authorship Policy - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Content Styles */
+        .content-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .content-card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-card ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .policy-highlight {
+            background-color: var(--light);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            font-family: monospace;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checklist li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="ai-policy.html" class="active">AI Policy</a></li>
+                        <li><a href="submit.html">Submit</a></li>
+                        <li><a href="archives.html">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>AI Co-Authorship Policy</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>AI Policy</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- AI Policy Content -->
+    <section>
+        <div class="container">
+            <div class="content-card">
+                <h2>Introduction</h2>
+                <p>The AI-Stat Journal recognizes the growing role of artificial intelligence in scientific research and writing. Our AI Co-Authorship Policy establishes guidelines for the transparent and ethical use of AI tools in research submitted to our journal.</p>
+                
+                <p>This policy aims to balance innovation with academic integrity, ensuring that AI contributions are properly acknowledged while maintaining human accountability for research outcomes.</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Definition of AI Co-Authorship</h3>
+                <p>We define AI co-authorship as the substantive contribution of AI systems (such as ChatGPT-4, Claude 3, Gemini 2, or similar advanced models) to the research process. This includes but is not limited to:</p>
+                
+                <ul>
+                    <li>Substantial contribution to research design or methodology</li>
+                    <li>Significant assistance in data analysis or interpretation</li>
+                    <li>Major contribution to manuscript writing or revision</li>
+                    <li>Development of novel algorithms or statistical approaches</li>
+                </ul>
+                
+                <div class="policy-highlight">
+                    <p><strong>Important:</strong> AI systems cannot be held accountable for research integrity. Human authors retain full responsibility for all aspects of the work, including accuracy, ethics, and compliance with academic standards.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Ethical Use and Disclosure Requirements</h3>
+                <p>Authors must adhere to the following requirements when using AI in their research:</p>
+                
+                <ul class="checklist">
+                    <li>Clearly declare all AI assistance in the dedicated section of the submission form</li>
+                    <li>Specify the AI model name, version, and provider (e.g., "ChatGPT-5, OpenAI, October 2025")</li>
+                    <li>Describe the nature and extent of AI contribution in methodology, writing, or analysis</li>
+                    <li>Verify all AI-generated content for accuracy and appropriateness</li>
+                    <li>Ensure AI use does not violate terms of service or intellectual property rights</li>
+                    <li>Maintain human oversight of research design, interpretation, and conclusions</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Acceptable vs. Unacceptable AI Use</h3>
+                
+                <h4>✅ Acceptable Uses</h4>
+                <ul>
+                    <li>Language refinement and editing assistance</li>
+                    <li>Code generation for statistical analysis</li>
+                    <li>Literature review assistance</li>
+                    <li>Data visualization design</li>
+                    <li>Hypothesis generation</li>
+                    <li>Methodology suggestions</li>
+                </ul>
+                
+                <h4>❌ Unacceptable Uses</h4>
+                <ul>
+                    <li>Substantial content generation without human verification</li>
+                    <li>Fabrication of data or references</li>
+                    <li>Plagiarism of existing works</li>
+                    <li>Bypassing human critical thinking in interpretation</li>
+                    <li>Use of AI for peer review without disclosure</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>AI Declaration Format</h3>
+                <p>All submissions with AI assistance must include a clear declaration following this format:</p>
+                
+                <div class="example-box">
+                    <p><strong>AI Contribution Statement</strong></p>
+                    <p>The author(s) used [AI Model Name, Version] from [Provider] during the preparation of this work. Specifically, the AI was used for [specific tasks, e.g., "literature review assistance and initial draft generation"]. The author(s) have reviewed and edited the output and take full responsibility for the content of this publication.</p>
+                </div>
+                
+                <p>Example:</p>
+                <div class="example-box">
+                    <p><strong>AI Contribution Statement</strong></p>
+                    <p>The author(s) used ChatGPT-5 (OpenAI, October 2025) during the preparation of this work. Specifically, the AI was used for language refinement and data visualization design. The author(s) have reviewed and edited the output and take full responsibility for the content of this publication.</p>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>AI Integrity Checker</h3>
+                <p>All submissions undergo automated screening using our AI Integrity Checker, which:</p>
+                
+                <ul>
+                    <li>Detects excessive AI-generated content (>40% threshold)</li>
+                    <li>Flags potential plagiarism or content recycling</li>
+                    <li>Verifies proper AI declaration</li>
+                    <li>Assesses coherence between declared AI use and manuscript content</li>
+                </ul>
+                
+                <p>Manuscripts flagged by the AI Integrity Checker undergo additional editorial review before proceeding to peer review.</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Reviewer Guidelines for AI-Assisted Manuscripts</h3>
+                <p>Reviewers evaluating AI-assisted manuscripts should:</p>
+                
+                <ul>
+                    <li>Focus on scientific merit regardless of AI involvement</li>
+                    <li>Verify that AI use is properly disclosed and appropriate</li>
+                    <li>Assess whether human oversight is evident in the work</li>
+                    <li>Evaluate the novelty and contribution beyond AI assistance</li>
+                    <li>Flag any concerns about ethical AI use to editors</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Frequently Asked Questions</h3>
+                
+                <h4>Q: Can an AI system be listed as a co-author?</h4>
+                <p>A: No. While we recognize AI contributions, AI systems cannot assume accountability. Instead, AI contributions should be acknowledged in the AI Contribution Statement.</p>
+                
+                <h4>Q: What percentage of AI-generated content is acceptable?</h4>
+                <p>A: There is no fixed percentage limit, but the intellectual contribution must be primarily human. Manuscripts with >40% AI-generated content typically require additional scrutiny.</p>
+                
+                <h4>Q: Do I need to declare the use of grammar checkers or translation tools?</h4>
+                <p>A: Basic tools like Grammarly or Google Translate do not require declaration unless they substantially contribute to the intellectual content.</p>
+                
+                <h4>Q: What happens if I don't declare AI assistance?</h4>
+                <p>A: Failure to properly declare AI assistance may result in manuscript rejection or retraction if discovered after publication.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

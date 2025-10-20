@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Content Styles */
+        .content-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .content-card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-card ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html" class="active">About</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="ai-policy.html">AI Policy</a></li>
+                        <li><a href="submit.html">Submit</a></li>
+                        <li><a href="archives.html">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>About the Journal</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>About</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section>
+        <div class="container">
+            <div class="content-card">
+                <h2>Mission and Scope</h2>
+                <p>The AI-Stat Journal is an open-access, peer-reviewed scientific journal dedicated to publishing high-quality research at the intersection of statistics, data science, and AI-assisted analytics. Our mission is to advance the field by publishing innovative research that demonstrates the practical application of statistical methods enhanced by artificial intelligence.</p>
+                
+                <p>We pioneer the inclusion of AI co-authorship, recognizing transparent and ethical AI contributions in scientific research while maintaining rigorous academic standards.</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Journal Focus Areas</h3>
+                <ul>
+                    <li><strong>Statistical Methodology:</strong> Novel statistical models, inference techniques, and computational statistics</li>
+                    <li><strong>Machine Learning & AI:</strong> AI algorithms, deep learning, and their statistical foundations</li>
+                    <li><strong>Data Science Applications:</strong> Real-world applications in business, healthcare, social sciences, and engineering</li>
+                    <li><strong>Intelligent Analytics:</strong> AI-enhanced data analysis, visualization, and interpretation</li>
+                    <li><strong>Ethical AI & Statistics:</strong> Fairness, transparency, and ethical considerations in AI and statistical practice</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Types of Manuscripts Accepted</h3>
+                <ul>
+                    <li><strong>Research Articles:</strong> Original research presenting significant contributions</li>
+                    <li><strong>Review Articles:</strong> Comprehensive surveys of current research areas</li>
+                    <li><strong>Methodology Papers:</strong> New statistical methods or substantial improvements to existing ones</li>
+                    <li><strong>Case Studies:</strong> Detailed applications of statistical and AI methods to real problems</li>
+                    <li><strong>Short Communications:</strong> Brief reports of preliminary findings or technical notes</li>
+                    <li><strong>Software Papers:</strong> Descriptions of new statistical software or AI tools</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Peer-Review Process</h3>
+                <p>All submissions undergo a rigorous double-blind peer review process. Our editorial board consists of internationally recognized experts who ensure that published articles meet the highest standards of academic excellence.</p>
+                
+                <p>The typical review process includes:</p>
+                <ul>
+                    <li>Initial editorial screening for scope and formatting</li>
+                    <li>Assignment to at least two independent reviewers</li>
+                    <li>Double-blind review process (typically 4-6 weeks)</li>
+                    <li>Editorial decision based on reviewer recommendations</li>
+                    <li>Revision period for conditionally accepted papers</li>
+                    <li>Final acceptance and publication</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Open Access Policy</h3>
+                <p>AI-Stat Journal is a platinum open access journal, meaning:</p>
+                <ul>
+                    <li>All articles are immediately freely available to read, download, and share</li>
+                    <li>No article processing charges (APCs) or submission fees</li>
+                    <li>Authors retain copyright of their work</li>
+                    <li>All content published under Creative Commons Attribution License (CC BY)</li>
+                </ul>
+                <p>This model ensures maximum visibility and impact for published research while removing financial barriers for both authors and readers.</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Indexing and Impact</h3>
+                <p>AI-Stat Journal is indexed in leading databases including:</p>
+                <ul>
+                    <li>Google Scholar</li>
+                    <li>CrossRef</li>
+                    <li>DOAJ (Directory of Open Access Journals)</li>
+                    <li>Scopus (application pending)</li>
+                    <li>Web of Science (application pending)</li>
+                </ul>
+                <p>We are committed to maintaining high standards to ensure inclusion in major indexing services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

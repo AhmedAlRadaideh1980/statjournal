@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Reviewers - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Content Styles */
+        .content-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .content-card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-card ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .reviewer-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .review-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .review-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .review-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-in-progress {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .review-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .review-deadline {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .criteria-table th,
+        .criteria-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .criteria-table th {
+            background-color: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .criteria-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .reviewer-actions {
+                flex-direction: column;
+            }
+            
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="ai-policy.html">AI Policy</a></li>
+                        <li><a href="submit.html">Submit</a></li>
+                        <li><a href="archives.html">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>For Reviewers</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>For Reviewers</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Reviewers Content -->
+    <section>
+        <div class="container">
+            <div class="content-card">
+                <h2>Reviewer Portal</h2>
+                <p>Welcome to the AI-Stat Journal reviewer portal. Thank you for your contribution to maintaining the high quality of our publications. Your expertise and timely reviews are essential to our peer-review process.</p>
+                
+                <div class="reviewer-actions">
+                    <a href="#" class="btn">Reviewer Login</a>
+                    <a href="contact.html" class="btn btn-outline">Become a Reviewer</a>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>My Review Assignments</h3>
+                <p>Below are your current review assignments. Please complete reviews by the specified deadlines.</p>
+                
+                <div class="review-grid">
+                    <div class="review-item">
+                        <div class="review-meta">
+                            <span>MS-2023-045</span>
+                            <span class="review-status status-pending">Pending</span>
+                        </div>
+                        <div class="review-title">Bayesian Methods for High-Dimensional Data Analysis with AI Assistance</div>
+                        <div class="review-deadline">Due: 15 Dec 2023</div>
+                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Start Review</a>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-meta">
+                            <span>MS-2023-038</span>
+                            <span class="review-status status-in-progress">In Progress</span>
+                        </div>
+                        <div class="review-title">Neural Networks for Time Series Forecasting: A Statistical Perspective</div>
+                        <div class="review-deadline">Due: 05 Dec 2023</div>
+                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Continue Review</a>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-meta">
+                            <span>MS-2023-029</span>
+                            <span class="review-status status-completed">Completed</span>
+                        </div>
+                        <div class="review-title">Ethical Considerations in AI-Assisted Statistical Modeling</div>
+                        <div class="review-deadline">Submitted: 20 Nov 2023</div>
+                        <a href="#" class="btn btn-outline" style="margin-top: 1rem; display: inline-block;">View Review</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h3>Reviewer Guidelines</h3>
+                <p>Please follow these guidelines when reviewing manuscripts for AI-Stat Journal:</p>
+                
+                <h4>Review Process</h4>
+                <ul>
+                    <li>Reviews should be completed within 3 weeks of assignment</li>
+                    <li>Provide constructive, specific, and evidence-based feedback</li>
+                    <li>Evaluate both strengths and weaknesses of the manuscript</li>
+                    <li>Maintain confidentiality - do not share manuscript details</li>
+                    <li>Declare any conflicts of interest to the editor</li>
+                </ul>
+                
+                <h4>Evaluation Criteria</h4>
+                <table class="criteria-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Evaluation Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Originality</strong></td>
+                            <td>Novelty of research, contribution to field, innovative methodology</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Methodology</strong></td>
+                            <td>Appropriateness of methods, statistical rigor, reproducibility</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Results</strong></td>
+                            <td>Clarity of presentation, appropriate analysis, validity of conclusions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Use</strong></td>
+                            <td>Proper disclosure, ethical use, appropriate application</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Writing Quality</strong></td>
+                            <td>Clarity, organization, grammar, appropriate references</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>AI-Specific Considerations</h4>
+                <p>When reviewing manuscripts with AI involvement:</p>
+                <ul>
+                    <li>Verify that AI use is properly disclosed according to our policy</li>
+                    <li>Assess whether AI contributions are appropriately described</li>
+                    <li>Evaluate if human oversight is evident in the work</li>
+                    <li>Check that AI-generated content has been properly verified</li>
+                    <li>Consider whether the AI use adds value to the research</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Review Submission</h3>
+                <p>Please use our online review form to submit your evaluation. The form includes:</p>
+                
+                <ul>
+                    <li>Overall recommendation (Accept, Minor Revision, Major Revision, Reject)</li>
+                    <li>Rating scales for key evaluation criteria</li>
+                    <li>Comments to authors (constructive feedback for improvement)</li>
+                    <li>Confidential comments to editors (e.g., ethical concerns, reviewer conflicts)</li>
+                    <li>Option to upload annotated manuscript (optional)</li>
+                </ul>
+                
+                <h4>Recommendation Guidelines</h4>
+                <ul>
+                    <li><strong>Accept:</strong> Manuscript is excellent and requires no revisions</li>
+                    <li><strong>Minor Revision:</strong> Manuscript is strong with minor issues that need addressing</li>
+                    <li><strong>Major Revision:</strong> Manuscript has potential but requires substantial improvements</li>
+                    <li><strong>Reject:</strong> Manuscript has fundamental flaws or does not fit journal scope</li>
+                </ul>
+            </div>
+            
+            <div class="content-card">
+                <h3>Reviewer Resources</h3>
+                
+                <div class="reviewer-actions">
+                    <a href="#" class="btn"><i class="fas fa-download"></i> Download Review Form</a>
+                    <a href="#" class="btn btn-outline"><i class="fas fa-book"></i> Ethics Guidelines</a>
+                    <a href="ai-policy.html" class="btn btn-outline"><i class="fas fa-robot"></i> AI Policy</a>
+                </div>
+                
+                <h4 style="margin-top: 2rem;">Frequently Asked Questions</h4>
+                
+                <h5>How long should my review be?</h5>
+                <p>Reviews typically range from 500-1500 words, focusing on the most important aspects of the manuscript. Quality is more important than length.</p>
+                
+                <h5>What if I cannot complete a review on time?</h5>
+                <p>Please contact the editorial office as soon as possible if you need an extension or must decline a review assignment.</p>
+                
+                <h5>Can I suggest additional reviewers?</h5>
+                <p>Yes, you can suggest other qualified reviewers in your confidential comments to the editor.</p>
+                
+                <h5>Is reviewer training available?</h5>
+                <p>Yes, we offer optional online training sessions for new reviewers. Contact the editorial office for details.</p>
+            </div>
+            
+            <div class="content-card">
+                <h3>Become a Reviewer</h3>
+                <p>We are always looking for qualified experts to join our reviewer panel. If you are interested in reviewing for AI-Stat Journal, please contact us with your CV and areas of expertise.</p>
+                
+                <div class="reviewer-actions">
+                    <a href="contact.html" class="btn">Apply to Review</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Board - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Board Styles */
+        .board-category {
+            margin-bottom: 3rem;
+        }
+        
+        .board-category h3 {
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .board-member {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .board-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            display: block;
+            border: 3px solid var(--light);
+        }
+        
+        .member-name {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-title {
+            text-align: center;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-affiliation {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .member-expertise {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .board-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="editorial-board.html" class="active">Editorial Board</a></li>
+                        <li><a href="ai-policy.html">AI Policy</a></li>
+                        <li><a href="submit.html">Submit</a></li>
+                        <li><a href="archives.html">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Editorial Board</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Editorial Board</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Editorial Board Content -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Editorial Team</h2>
+                <p>Internationally recognized experts guiding the journal's vision and maintaining academic excellence</p>
+            </div>
+            
+            <div class="board-category">
+                <h3>Editor-in-Chief</h3>
+                <div class="board-grid">
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Elena Rodriguez</div>
+                        <div class="member-title">Editor-in-Chief</div>
+                        <div class="member-affiliation">Stanford University, USA</div>
+                        <div class="member-expertise">Statistical Learning, Bayesian Methods, AI Ethics</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="board-category">
+                <h3>Associate Editors</h3>
+                <div class="board-grid">
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Michael Chen</div>
+                        <div class="member-title">Associate Editor</div>
+                        <div class="member-affiliation">MIT, USA</div>
+                        <div class="member-expertise">Machine Learning, Deep Learning, Computational Statistics</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Sarah Johnson</div>
+                        <div class="member-title">Associate Editor</div>
+                        <div class="member-affiliation">University of Oxford, UK</div>
+                        <div class="member-expertise">Bayesian Statistics, Causal Inference, Health Analytics</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Kenji Tanaka</div>
+                        <div class="member-title">Associate Editor</div>
+                        <div class="member-affiliation">University of Tokyo, Japan</div>
+                        <div class="member-expertise">Time Series Analysis, Financial Statistics, AI Applications</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="board-category">
+                <h3>Editorial Board Members</h3>
+                <div class="board-grid">
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Maria Garcia</div>
+                        <div class="member-affiliation">University of Barcelona, Spain</div>
+                        <div class="member-expertise">Spatial Statistics, Environmental Modeling</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. James Wilson</div>
+                        <div class="member-affiliation">University of Toronto, Canada</div>
+                        <div class="member-expertise">Experimental Design, Industrial Statistics</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Li Wei</div>
+                        <div class="member-affiliation">Tsinghua University, China</div>
+                        <div class="member-expertise">High-Dimensional Statistics, Network Analysis</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Anna Schmidt</div>
+                        <div class="member-affiliation">Technical University of Berlin, Germany</div>
+                        <div class="member-expertise">Statistical Computing, Optimization Algorithms</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Robert Kim</div>
+                        <div class="member-affiliation">University of Melbourne, Australia</div>
+                        <div class="member-expertise">Biostatistics, Clinical Trials, Medical AI</div>
+                    </div>
+                    
+                    <div class="board-member">
+                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+                        </div>
+                        <div class="member-name">Dr. Fatima Ahmed</div>
+                        <div class="member-affiliation">Cairo University, Egypt</div>
+                        <div class="member-expertise">Survey Methodology, Social Statistics</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="board-category">
+                <h3>Join Our Team</h3>
+                <div style="background-color: white; border-radius: 8px; padding: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                    <p>We are always looking for qualified experts to join our editorial board and reviewer panel. If you are interested in contributing to the journal as an editor or reviewer, please contact us with your CV and areas of expertise.</p>
+                    <a href="contact.html" class="btn" style="display: inline-block; background-color: var(--secondary); color: white; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: all 0.3s; margin-top: 1rem;">Apply to Join</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

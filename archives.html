@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives - AI-Stat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: -5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active {
+            color: var(--secondary);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 10px;
+            color: var(--light);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Archive Styles */
+        .archive-filters {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .search-box {
+            flex-grow: 1;
+            max-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .issue-container {
+            margin-bottom: 3rem;
+        }
+        
+        .issue-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .issue-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .issue-meta {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-card {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .article-authors {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.8rem;
+        }
+        
+        .article-abstract {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-badge {
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .article-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .article-actions .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+        
+        .pagination .btn {
+            padding: 0.5rem 1rem;
+        }
+        
+        .pagination .active {
+            background-color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2530;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .archive-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: space-between;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .issue-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">AI-Stat Journal</div>
+                        <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="ai-policy.html">AI Policy</a></li>
+                        <li><a href="submit.html">Submit</a></li>
+                        <li><a href="archives.html" class="active">Archives</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Journal Archives</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Archives</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Archives Content -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Published Issues</h2>
+                <p>Browse all published articles from AI-Stat Journal</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="archive-filters">
+                <div class="filter-group">
+                    <label for="year-filter">Year:</label>
+                    <select id="year-filter">
+                        <option value="all">All Years</option>
+                        <option value="2023" selected>2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="volume-filter">Volume:</label>
+                    <select id="volume-filter">
+                        <option value="all">All Volumes</option>
+                        <option value="2">Volume 2</option>
+                        <option value="1" selected>Volume 1</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="ai-filter">AI Involvement:</label>
+                    <select id="ai-filter">
+                        <option value="all">All Articles</option>
+                        <option value="ai">With AI Assistance</option>
+                        <option value="no-ai">Without AI Assistance</option>
+                    </select>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" placeholder="Search articles...">
+                </div>
+                
+                <button class="btn">Apply Filters</button>
+            </div>
+            
+            <!-- Current Issue -->
+            <div class="issue-container">
+                <div class="issue-header">
+                    <div class="issue-title">Volume 2, Issue 3 (October 2023)</div>
+                    <div class="issue-meta">15 Articles</div>
+                </div>
+                
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-title">Bayesian Neural Networks for Uncertainty Quantification in High-Dimensional Problems</div>
+                        <div class="article-authors">Zhang, W., Johnson, M., & Lee, S.</div>
+                        <div class="article-abstract">This paper introduces a novel Bayesian neural network framework for uncertainty quantification in high-dimensional statistical problems, demonstrating improved calibration and predictive performance compared to traditional methods.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.023</span>
+                            <span class="ai-badge">AI-Assisted</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">Interpretable Machine Learning for Causal Inference in Observational Studies</div>
+                        <div class="article-authors">Chen, L., & Rodriguez, E.</div>
+                        <div class="article-abstract">We propose an interpretable machine learning approach for causal inference that maintains statistical rigor while providing transparent explanations for treatment effect estimates.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.024</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">AI-Augmented Statistical Power Analysis for Experimental Design</div>
+                        <div class="article-authors">Thompson, R., Wilson, K., & Garcia, M.</div>
+                        <div class="article-abstract">Leveraging AI techniques, we develop an adaptive power analysis framework that provides more accurate sample size estimates for complex experimental designs.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.025</span>
+                            <span class="ai-badge">AI-Assisted</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">Robust Statistical Methods for Anomaly Detection in IoT Data Streams</div>
+                        <div class="article-authors">Patel, A., & Schmidt, F.</div>
+                        <div class="article-abstract">This research presents robust statistical methods combined with streaming algorithms for real-time anomaly detection in high-frequency IoT data.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.026</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Previous Issue -->
+            <div class="issue-container">
+                <div class="issue-header">
+                    <div class="issue-title">Volume 2, Issue 2 (July 2023)</div>
+                    <div class="issue-meta">12 Articles</div>
+                </div>
+                
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-title">Federated Learning for Privacy-Preserving Statistical Analysis</div>
+                        <div class="article-authors">Kim, J., Anderson, P., & Brown, T.</div>
+                        <div class="article-abstract">We develop a federated learning framework that enables collaborative statistical analysis while preserving data privacy across multiple institutions.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.015</span>
+                            <span class="ai-badge">AI-Assisted</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">Deep Generative Models for Missing Data Imputation</div>
+                        <div class="article-authors">Williams, R., & Davis, H.</div>
+                        <div class="article-abstract">This paper evaluates various deep generative models for missing data imputation and proposes a novel evaluation framework for assessing imputation quality.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.016</span>
+                            <span class="ai-badge">AI-Assisted</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">Statistical Foundations of Explainable AI: A Causal Perspective</div>
+                        <div class="article-authors">Martinez, L., & Taylor, S.</div>
+                        <div class="article-abstract">We establish statistical foundations for explainable AI through a causal inference framework, providing rigorous interpretation methods for complex models.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2023.017</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Older Issues -->
+            <div class="issue-container">
+                <div class="issue-header">
+                    <div class="issue-title">Volume 1 (2022)</div>
+                    <div class="issue-meta">3 Issues, 32 Articles</div>
+                </div>
+                
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-title">Ethical Guidelines for AI-Assisted Statistical Research</div>
+                        <div class="article-authors">Editorial Board</div>
+                        <div class="article-abstract">This position paper outlines ethical guidelines for the use of AI in statistical research, covering transparency, accountability, and reproducibility concerns.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2022.001</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-title">Benchmarking AI-Enhanced Statistical Software</div>
+                        <div class="article-authors">Robinson, K., & Li, W.</div>
+                        <div class="article-abstract">We present a comprehensive benchmarking framework for evaluating AI-enhanced statistical software across multiple dimensions including accuracy, efficiency, and usability.</div>
+                        <div class="article-meta">
+                            <span>DOI: 10.1234/ai-stat.2022.008</span>
+                            <span class="ai-badge">AI-Assisted</span>
+                        </div>
+                        <div class="article-actions">
+                            <a href="#" class="btn">PDF</a>
+                            <a href="#" class="btn btn-outline">Abstract</a>
+                            <a href="#" class="btn btn-outline">Cite</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="btn active">1</a>
+                <a href="#" class="btn">2</a>
+                <a href="#" class="btn">3</a>
+                <a href="#" class="btn">Next</a>
+            </div>
+            
+            <!-- Statistics -->
+            <div style="background-color: white; border-radius: 8px; padding: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); margin-top: 3rem;">
+                <h3>Archive Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);">47</div>
+                        <div>Total Articles</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);">42%</div>
+                        <div>With AI Assistance</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);">5</div>
+                        <div>Issues Published</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);">68%</div>
+                        <div>Acceptance Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AI-Stat Journal</h3>
+                    <p>Journal of Applied Statistics and Intelligent Analytics</p>
+                    <p>ISSN: 1234-5678 (Print)<br>ISSN: 9876-5432 (Online)</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About the Journal</a></li>
+                        <li><a href="editorial-board.html">Editorial Board</a></li>
+                        <li><a href="submit.html">Submit Manuscript</a></li>
+                        <li><a href="archives.html">Current Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Policies</h3>
+                    <ul class="footer-links">
+                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                        <li><a href="#">Peer Review Process</a></li>
+                        <li><a href="#">Open Access Statement</a></li>
+                        <li><a href="#">Publication Ethics</a></li>
+                        <li><a href="#">Copyright Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AI-Stat Journal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Filter functionality (basic implementation)
+        document.querySelectorAll('.archive-filters .btn').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Filters applied! (This is a demo)');
+            });
+        });
+    </script>
+</body>
+</html>
