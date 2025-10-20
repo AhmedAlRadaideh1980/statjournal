@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Reviewers - AI-Stat Journal</title>
+    <meta name="description" content="Reviewer portal for AI-Stat Journal. Access review assignments, guidelines, and resources for peer reviewers">
+    <meta name="keywords" content="reviewers, peer review, reviewer guidelines, manuscript evaluation, review process">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #1a2530;
             --success: #27ae60;
             --warning: #f39c12;
+            --gray: #6c757d;
+            --border: #dee2e6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
         }
         
         .container {
@@ -36,31 +49,34 @@
             padding: 0 15px;
         }
         
-        /* Header Styles */
+        /* Header Styles - Enhanced Sticky Header */
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .logo-icon {
             font-size: 2.5rem;
-            margin-right: 10px;
+            margin-right: 12px;
             color: var(--secondary);
         }
         
@@ -70,38 +86,54 @@
         }
         
         .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: -5px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: -3px;
         }
         
-        nav ul {
+        /* Enhanced Navigation with Dropdowns */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-main {
             display: flex;
             list-style: none;
         }
         
-        nav ul li {
-            margin-left: 1.5rem;
+        .nav-item {
+            position: relative;
+            margin-left: 1.2rem;
         }
         
-        nav ul li a {
+        .nav-item > a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 0;
-            position: relative;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        nav ul li a:hover {
+        .nav-item > a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-item > a.active {
             color: var(--secondary);
         }
         
-        nav ul li a.active {
-            color: var(--secondary);
-        }
-        
-        nav ul li a.active::after {
+        .nav-item > a.active::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -111,44 +143,156 @@
             background-color: var(--secondary);
         }
         
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown-menu li {
+            list-style: none;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light);
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            width: 180px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+        }
+        
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            color: white;
         }
         
         /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0 3rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
         }
         
         .page-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
+        /* Breadcrumb */
         .breadcrumb {
             display: flex;
             justify-content: center;
             list-style: none;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
         .breadcrumb li {
             margin: 0 5px;
+            font-size: 0.9rem;
         }
         
         .breadcrumb li a {
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb li a:hover {
+            color: white;
         }
         
         .breadcrumb li:after {
-            content: ">";
+            content: "›";
             margin-left: 10px;
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.5);
         }
         
         .breadcrumb li:last-child:after {
@@ -188,15 +332,21 @@
         .content-card {
             background-color: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
-        .content-card h3 {
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-card h2, .content-card h3 {
             color: var(--primary);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
             border-bottom: 1px solid var(--light);
         }
         
@@ -206,7 +356,9 @@
         }
         
         .content-card ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 0.5rem;
         }
         
         .reviewer-actions {
@@ -219,19 +371,20 @@
             display: inline-block;
             background-color: var(--secondary);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            font-size: 1rem;
         }
         
         .btn:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         .btn-outline {
@@ -258,6 +411,12 @@
             padding: 1.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-left: 4px solid var(--secondary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .review-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .review-meta {
@@ -265,7 +424,7 @@
             justify-content: space-between;
             margin-bottom: 1rem;
             font-size: 0.9rem;
-            color: #666;
+            color: var(--gray);
         }
         
         .review-status {
@@ -311,7 +470,7 @@
         .criteria-table td {
             padding: 0.8rem;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--border);
         }
         
         .criteria-table th {
@@ -324,24 +483,47 @@
             background-color: #f5f5f5;
         }
         
+        /* Focus styles for accessibility */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to main content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1001;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
         /* Footer */
         footer {
-            background-color: #1a2530;
+            background-color: var(--dark);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1.5rem;
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
         
         .footer-column h3 {
             color: var(--secondary);
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
         .footer-links {
@@ -356,6 +538,9 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .footer-links a:hover {
@@ -364,7 +549,7 @@
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid #34495e;
             color: #95a5a6;
             font-size: 0.9rem;
@@ -373,26 +558,42 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-wrap: wrap;
             }
             
             .logo {
                 margin-bottom: 1rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
                 width: 100%;
-                display: none;
+                justify-content: center;
             }
             
-            nav ul.show {
-                display: flex;
+            .nav-container {
+                width: 100%;
+                justify-content: center;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            .nav-main {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 0.3rem;
+            }
+            
+            .search-container {
+                margin: 1rem 0 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-box input {
+                width: 100%;
             }
             
             .mobile-menu {
@@ -400,6 +601,47 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
+            }
+            
+            .nav-main {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-main.show {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-item > a {
+                padding: 0.8rem 1.5rem;
+                justify-content: space-between;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: rgba(0, 0, 0, 0.1);
+                width: 100%;
+                margin-top: 0;
+            }
+            
+            .dropdown-menu a {
+                padding-left: 2.5rem;
             }
             
             .page-header h1 {
@@ -417,33 +659,71 @@
     </style>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
                     </div>
                     <div>
                         <div class="logo-text">AI-Stat Journal</div>
                         <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
                     </div>
                 </div>
+                
                 <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="ai-policy.html">AI Policy</a></li>
-                        <li><a href="submit.html">Submit</a></li>
-                        <li><a href="archives.html">Archives</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
+                    <div class="nav-container">
+                        <ul class="nav-main">
+                            <li class="nav-item">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="about.html">About <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="about.html">About the Journal</a></li>
+                                    <li><a href="editorial-board.html">Editorial Board</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="ai-policy.html">Policies <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                                    <li><a href="#">Peer Review Process</a></li>
+                                    <li><a href="#">Open Access Statement</a></li>
+                                    <li><a href="#">Publication Ethics</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="submit.html">Submit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="archives.html">Archives</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="reviewers.html" class="active">For Reviewers</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="search-container">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search articles, authors..." aria-label="Search">
+                                <button type="button" aria-label="Search">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
+                
+                <button class="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -460,166 +740,168 @@
     </section>
 
     <!-- Reviewers Content -->
-    <section>
-        <div class="container">
-            <div class="content-card">
-                <h2>Reviewer Portal</h2>
-                <p>Welcome to the AI-Stat Journal reviewer portal. Thank you for your contribution to maintaining the high quality of our publications. Your expertise and timely reviews are essential to our peer-review process.</p>
-                
-                <div class="reviewer-actions">
-                    <a href="#" class="btn">Reviewer Login</a>
-                    <a href="contact.html" class="btn btn-outline">Become a Reviewer</a>
-                </div>
-            </div>
-            
-            <div class="content-card">
-                <h3>My Review Assignments</h3>
-                <p>Below are your current review assignments. Please complete reviews by the specified deadlines.</p>
-                
-                <div class="review-grid">
-                    <div class="review-item">
-                        <div class="review-meta">
-                            <span>MS-2023-045</span>
-                            <span class="review-status status-pending">Pending</span>
-                        </div>
-                        <div class="review-title">Bayesian Methods for High-Dimensional Data Analysis with AI Assistance</div>
-                        <div class="review-deadline">Due: 15 Dec 2023</div>
-                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Start Review</a>
-                    </div>
+    <main id="main-content">
+        <section>
+            <div class="container">
+                <div class="content-card">
+                    <h2>Reviewer Portal</h2>
+                    <p>Welcome to the AI-Stat Journal reviewer portal. Thank you for your contribution to maintaining the high quality of our publications. Your expertise and timely reviews are essential to our peer-review process.</p>
                     
-                    <div class="review-item">
-                        <div class="review-meta">
-                            <span>MS-2023-038</span>
-                            <span class="review-status status-in-progress">In Progress</span>
-                        </div>
-                        <div class="review-title">Neural Networks for Time Series Forecasting: A Statistical Perspective</div>
-                        <div class="review-deadline">Due: 05 Dec 2023</div>
-                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Continue Review</a>
-                    </div>
-                    
-                    <div class="review-item">
-                        <div class="review-meta">
-                            <span>MS-2023-029</span>
-                            <span class="review-status status-completed">Completed</span>
-                        </div>
-                        <div class="review-title">Ethical Considerations in AI-Assisted Statistical Modeling</div>
-                        <div class="review-deadline">Submitted: 15 Nov 2023</div>
-                        <a href="#" class="btn btn-outline" style="margin-top: 1rem; display: inline-block;">View Review</a>
+                    <div class="reviewer-actions">
+                        <a href="#" class="btn">Reviewer Login</a>
+                        <a href="contact.html" class="btn btn-outline">Become a Reviewer</a>
                     </div>
                 </div>
-            </div>
-            
-            <div class="content-card">
-                <h3>Reviewer Guidelines</h3>
-                <p>Please follow these guidelines when reviewing manuscripts for AI-Stat Journal:</p>
                 
-                <h4>Review Focus Areas</h4>
-                <ul>
-                    <li><strong>Originality:</strong> Does the paper present novel concepts, approaches, or results?</li>
-                    <li><strong>Significance:</strong> Are the findings important to the field of statistics and AI?</li>
-                    <li><strong>Methodology:</strong> Are the methods sound, appropriate, and well-described?</li>
-                    <li><strong>AI Transparency:</strong> Is AI assistance properly declared and documented?</li>
-                    <li><strong>Clarity:</strong> Is the paper well-organized and clearly written?</li>
-                    <li><strong>References:</strong> Are citations appropriate and complete?</li>
-                </ul>
-                
-                <h4>AI-Assisted Manuscripts</h4>
-                <p>When reviewing manuscripts with AI assistance:</p>
-                <ul>
-                    <li>Verify that AI use is properly declared in the submission</li>
-                    <li>Assess whether the level of AI assistance is appropriate and ethical</li>
-                    <li>Evaluate the human intellectual contribution beyond AI-generated content</li>
-                    <li>Check for coherence and consistency that might indicate insufficient human oversight</li>
-                </ul>
-                
-                <h4>Review Structure</h4>
-                <p>Please structure your review as follows:</p>
-                <ol>
-                    <li><strong>Summary:</strong> Brief overview of the paper's main contributions</li>
-                    <li><strong>Major Comments:</strong> Substantive issues that affect the paper's validity or significance</li>
-                    <li><strong>Minor Comments:</strong> Specific suggestions for improvement (typos, clarifications, etc.)</li>
-                    <li><strong>Recommendation:</strong> Clear recommendation (Accept, Minor Revision, Major Revision, Reject)</li>
-                </ol>
-            </div>
-            
-            <div class="content-card">
-                <h3>Review Criteria</h3>
-                <p>Please use the following criteria when evaluating manuscripts:</p>
-                
-                <table class="criteria-table">
-                    <thead>
-                        <tr>
-                            <th>Criterion</th>
-                            <th>Excellent</th>
-                            <th>Good</th>
-                            <th>Fair</th>
-                            <th>Poor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Originality & Innovation</td>
-                            <td>Highly novel approach or concept</td>
-                            <td>Some novel elements</td>
-                            <td>Minor innovation</td>
-                            <td>No significant innovation</td>
-                        </tr>
-                        <tr>
-                            <td>Technical Quality</td>
-                            <td>Methodologically sound and rigorous</td>
-                            <td>Generally sound with minor issues</td>
-                            <td>Some methodological concerns</td>
-                            <td>Major methodological flaws</td>
-                        </tr>
-                        <tr>
-                            <td>Clarity & Organization</td>
-                            <td>Exceptionally clear and well-structured</td>
-                            <td>Generally clear with minor issues</td>
-                            <td>Requires significant improvement</td>
-                            <td>Unclear and poorly organized</td>
-                        </tr>
-                        <tr>
-                            <td>Significance to Field</td>
-                            <td>Major contribution to the field</td>
-                            <td>Moderate contribution</td>
-                            <td>Minor contribution</td>
-                            <td>No significant contribution</td>
-                        </tr>
-                        <tr>
-                            <td>AI Use (if applicable)</td>
-                            <td>Appropriate, transparent, and ethical</td>
-                            <td>Generally appropriate with minor issues</td>
-                            <td>Some concerns about AI use</td>
-                            <td>Inappropriate or unethical AI use</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="content-card">
-                <h3>Reviewer Resources</h3>
-                <div class="review-grid">
-                    <div class="review-item">
-                        <h4>Reviewer Tutorial</h4>
-                        <p>Learn how to write effective and constructive reviews with our comprehensive tutorial.</p>
-                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Access Tutorial</a>
-                    </div>
+                <div class="content-card">
+                    <h3>My Review Assignments</h3>
+                    <p>Below are your current review assignments. Please complete reviews by the specified deadlines.</p>
                     
-                    <div class="review-item">
-                        <h4>Ethics Guidelines</h4>
-                        <p>Review our ethical guidelines for reviewers, including confidentiality and conflict of interest policies.</p>
-                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">View Guidelines</a>
+                    <div class="review-grid">
+                        <div class="review-item">
+                            <div class="review-meta">
+                                <span>MS-2023-045</span>
+                                <span class="review-status status-pending">Pending</span>
+                            </div>
+                            <div class="review-title">Bayesian Methods for High-Dimensional Data Analysis with AI Assistance</div>
+                            <div class="review-deadline">Due: 15 Dec 2023</div>
+                            <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Start Review</a>
+                        </div>
+                        
+                        <div class="review-item">
+                            <div class="review-meta">
+                                <span>MS-2023-038</span>
+                                <span class="review-status status-in-progress">In Progress</span>
+                            </div>
+                            <div class="review-title">Neural Networks for Time Series Forecasting: A Statistical Perspective</div>
+                            <div class="review-deadline">Due: 05 Dec 2023</div>
+                            <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Continue Review</a>
+                        </div>
+                        
+                        <div class="review-item">
+                            <div class="review-meta">
+                                <span>MS-2023-029</span>
+                                <span class="review-status status-completed">Completed</span>
+                            </div>
+                            <div class="review-title">Ethical Considerations in AI-Assisted Statistical Modeling</div>
+                            <div class="review-deadline">Submitted: 15 Nov 2023</div>
+                            <a href="#" class="btn btn-outline" style="margin-top: 1rem; display: inline-block;">View Review</a>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Reviewer Guidelines</h3>
+                    <p>Please follow these guidelines when reviewing manuscripts for AI-Stat Journal:</p>
                     
-                    <div class="review-item">
-                        <h4>Reviewer Recognition</h4>
-                        <p>Learn about our reviewer recognition program, including certificates and annual awards.</p>
-                        <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+                    <h4>Review Focus Areas</h4>
+                    <ul>
+                        <li><strong>Originality:</strong> Does the paper present novel concepts, approaches, or results?</li>
+                        <li><strong>Significance:</strong> Are the findings important to the field of statistics and AI?</li>
+                        <li><strong>Methodology:</strong> Are the methods sound, appropriate, and well-described?</li>
+                        <li><strong>AI Transparency:</strong> Is AI assistance properly declared and documented?</li>
+                        <li><strong>Clarity:</strong> Is the paper well-organized and clearly written?</li>
+                        <li><strong>References:</strong> Are citations appropriate and complete?</li>
+                    </ul>
+                    
+                    <h4>AI-Assisted Manuscripts</h4>
+                    <p>When reviewing manuscripts with AI assistance:</p>
+                    <ul>
+                        <li>Verify that AI use is properly declared in the submission</li>
+                        <li>Assess whether the level of AI assistance is appropriate and ethical</li>
+                        <li>Evaluate the human intellectual contribution beyond AI-generated content</li>
+                        <li>Check for coherence and consistency that might indicate insufficient human oversight</li>
+                    </ul>
+                    
+                    <h4>Review Structure</h4>
+                    <p>Please structure your review as follows:</p>
+                    <ol>
+                        <li><strong>Summary:</strong> Brief overview of the paper's main contributions</li>
+                        <li><strong>Major Comments:</strong> Substantive issues that affect the paper's validity or significance</li>
+                        <li><strong>Minor Comments:</strong> Specific suggestions for improvement (typos, clarifications, etc.)</li>
+                        <li><strong>Recommendation:</strong> Clear recommendation (Accept, Minor Revision, Major Revision, Reject)</li>
+                    </ol>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Review Criteria</h3>
+                    <p>Please use the following criteria when evaluating manuscripts:</p>
+                    
+                    <table class="criteria-table">
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Excellent</th>
+                                <th>Good</th>
+                                <th>Fair</th>
+                                <th>Poor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Originality & Innovation</td>
+                                <td>Highly novel approach or concept</td>
+                                <td>Some novel elements</td>
+                                <td>Minor innovation</td>
+                                <td>No significant innovation</td>
+                            </tr>
+                            <tr>
+                                <td>Technical Quality</td>
+                                <td>Methodologically sound and rigorous</td>
+                                <td>Generally sound with minor issues</td>
+                                <td>Some methodological concerns</td>
+                                <td>Major methodological flaws</td>
+                            </tr>
+                            <tr>
+                                <td>Clarity & Organization</td>
+                                <td>Exceptionally clear and well-structured</td>
+                                <td>Generally clear with minor issues</td>
+                                <td>Requires significant improvement</td>
+                                <td>Unclear and poorly organized</td>
+                            </tr>
+                            <tr>
+                                <td>Significance to Field</td>
+                                <td>Major contribution to the field</td>
+                                <td>Moderate contribution</td>
+                                <td>Minor contribution</td>
+                                <td>No significant contribution</td>
+                            </tr>
+                            <tr>
+                                <td>AI Use (if applicable)</td>
+                                <td>Appropriate, transparent, and ethical</td>
+                                <td>Generally appropriate with minor issues</td>
+                                <td>Some concerns about AI use</td>
+                                <td>Inappropriate or unethical AI use</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="content-card">
+                    <h3>Reviewer Resources</h3>
+                    <div class="review-grid">
+                        <div class="review-item">
+                            <h4>Reviewer Tutorial</h4>
+                            <p>Learn how to write effective and constructive reviews with our comprehensive tutorial.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Access Tutorial</a>
+                        </div>
+                        
+                        <div class="review-item">
+                            <h4>Ethics Guidelines</h4>
+                            <p>Review our ethical guidelines for reviewers, including confidentiality and conflict of interest policies.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">View Guidelines</a>
+                        </div>
+                        
+                        <div class="review-item">
+                            <h4>Reviewer Recognition</h4>
+                            <p>Learn about our reviewer recognition program, including certificates and annual awards.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -633,29 +915,29 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About the Journal</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="submit.html">Submit Manuscript</a></li>
-                        <li><a href="archives.html">Current Issue</a></li>
+                        <li><a href="index.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle" aria-hidden="true"></i> About the Journal</a></li>
+                        <li><a href="editorial-board.html"><i class="fas fa-users" aria-hidden="true"></i> Editorial Board</a></li>
+                        <li><a href="submit.html"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Manuscript</a></li>
+                        <li><a href="archives.html"><i class="fas fa-book-open" aria-hidden="true"></i> Current Issue</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Policies</h3>
                     <ul class="footer-links">
-                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
-                        <li><a href="#">Peer Review Process</a></li>
-                        <li><a href="#">Open Access Statement</a></li>
-                        <li><a href="#">Publication Ethics</a></li>
-                        <li><a href="#">Copyright Notice</a></li>
+                        <li><a href="ai-policy.html"><i class="fas fa-robot" aria-hidden="true"></i> AI Co-Authorship Policy</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Peer Review Process</a></li>
+                        <li><a href="#"><i class="fas fa-lock-open" aria-hidden="true"></i> Open Access Statement</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale" aria-hidden="true"></i> Publication Ethics</a></li>
+                        <li><a href="#"><i class="fas fa-copyright" aria-hidden="true"></i> Copyright Notice</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                        <li><a href="mailto:editor@aistatjournal.org"><i class="fas fa-envelope" aria-hidden="true"></i> editor@aistatjournal.org</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone" aria-hidden="true"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 123 Research Avenue, Science Park, ST 12345</a></li>
                     </ul>
                 </div>
             </div>
@@ -668,8 +950,64 @@
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+            document.querySelector('.nav-main').classList.toggle('show');
+            this.setAttribute('aria-expanded', 
+                this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
         });
+
+        // Search functionality
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box input').value;
+            if (searchTerm.trim()) {
+                // In a real implementation, this would redirect to search results
+                window.location.href = `archives.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+
+        // Allow pressing Enter in search box
+        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-box button').click();
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateY(10px)';
+                });
+            }
+        });
+
+        // Enhanced dropdown behavior for touch devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.nav-item > a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('dropdown-menu')) {
+                        e.preventDefault();
+                        const dropdown = this.nextElementSibling;
+                        const isOpen = dropdown.style.opacity === '1';
+                        
+                        // Close all dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                            menu.style.transform = 'translateY(10px)';
+                        });
+                        
+                        // Open this dropdown if it was closed
+                        if (!isOpen) {
+                            dropdown.style.opacity = '1';
+                            dropdown.style.visibility = 'visible';
+                            dropdown.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>

@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Stat Journal: Journal of Applied Statistics and Intelligent Analytics</title>
+    <meta name="description" content="Open-access, peer-reviewed journal publishing high-quality research in statistics, data science, and AI-assisted analytics">
+    <meta name="keywords" content="statistics, AI, machine learning, data science, research journal, academic publication">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #1a2530;
             --success: #27ae60;
             --warning: #f39c12;
+            --gray: #6c757d;
+            --border: #dee2e6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
         }
         
         .container {
@@ -36,31 +49,34 @@
             padding: 0 15px;
         }
         
-        /* Header Styles */
+        /* Header Styles - Enhanced Sticky Header */
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .logo-icon {
             font-size: 2.5rem;
-            margin-right: 10px;
+            margin-right: 12px;
             color: var(--secondary);
         }
         
@@ -70,38 +86,54 @@
         }
         
         .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: -5px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: -3px;
         }
         
-        nav ul {
+        /* Enhanced Navigation with Dropdowns */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-main {
             display: flex;
             list-style: none;
         }
         
-        nav ul li {
-            margin-left: 1.5rem;
+        .nav-item {
+            position: relative;
+            margin-left: 1.2rem;
         }
         
-        nav ul li a {
+        .nav-item > a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 0;
-            position: relative;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        nav ul li a:hover {
+        .nav-item > a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-item > a.active {
             color: var(--secondary);
         }
         
-        nav ul li a.active {
-            color: var(--secondary);
-        }
-        
-        nav ul li a.active::after {
+        .nav-item > a.active::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -111,55 +143,167 @@
             background-color: var(--secondary);
         }
         
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown-menu li {
+            list-style: none;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light);
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            width: 180px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+        }
+        
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            color: white;
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            padding: 4rem 0;
+            padding: 5rem 0 4rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .btn {
             display: inline-block;
             background-color: var(--secondary);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
         }
         
         .btn:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         .btn-outline {
             background-color: transparent;
             border: 2px solid white;
-            margin-left: 10px;
+            margin-left: 12px;
         }
         
         .btn-outline:hover {
@@ -167,22 +311,22 @@
             color: var(--primary);
         }
         
-        /* Section Styles */
+        /* Section Styles - Improved Spacing */
         section {
-            padding: 4rem 0;
+            padding: 5rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
             color: var(--primary);
         }
         
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             position: relative;
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
         
         .section-title h2::after {
@@ -192,47 +336,63 @@
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
-            height: 3px;
+            height: 4px;
             background-color: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 1rem auto 0;
         }
         
         /* Features Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .feature-card {
             background-color: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
             text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
         }
         
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .feature-card h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            flex-grow: 1;
         }
         
         /* Workflow Diagram */
         .workflow-container {
             background-color: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-top: 2rem;
             overflow-x: auto;
@@ -241,7 +401,7 @@
         .workflow {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             min-width: 900px;
         }
         
@@ -260,9 +420,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             position: relative;
             z-index: 2;
         }
@@ -295,9 +455,14 @@
         
         .step-content {
             background-color: var(--light);
-            padding: 1rem;
+            padding: 1.5rem 1rem;
             border-radius: 6px;
-            min-height: 120px;
+            min-height: 140px;
+        }
+        
+        .step-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.7rem;
         }
         
         /* Stats Section */
@@ -305,38 +470,64 @@
             background-color: var(--primary);
             color: white;
             text-align: center;
+            padding: 4rem 0;
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .stat-item h3 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
             color: var(--secondary);
         }
         
+        .stat-item p {
+            opacity: 0.9;
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Footer */
         footer {
-            background-color: #1a2530;
+            background-color: var(--dark);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1.5rem;
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
         
         .footer-column h3 {
             color: var(--secondary);
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
         .footer-links {
@@ -351,6 +542,9 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .footer-links a:hover {
@@ -359,13 +553,46 @@
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid #34495e;
             color: #95a5a6;
             font-size: 0.9rem;
         }
         
-        /* Responsive Design */
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb li a:hover {
+            color: white;
+        }
+        
+        .breadcrumb li:after {
+            content: "›";
+            margin-left: 10px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: "";
+        }
+        
+        /* Responsive Design - Mobile First Approach */
         @media (max-width: 992px) {
             .workflow {
                 flex-direction: column;
@@ -374,7 +601,7 @@
             
             .workflow-step {
                 width: 100%;
-                margin-bottom: 2rem;
+                margin-bottom: 2.5rem;
             }
             
             .step-arrow {
@@ -382,32 +609,56 @@
             }
             
             .step-circle {
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
             }
         }
         
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-wrap: wrap;
             }
             
             .logo {
                 margin-bottom: 1rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
                 width: 100%;
-                display: none;
+                justify-content: center;
             }
             
-            nav ul.show {
-                display: flex;
+            .nav-container {
+                width: 100%;
+                justify-content: center;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            .nav-main {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 0.3rem;
+            }
+            
+            .search-container {
+                margin: 1rem 0 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-box input {
+                width: 100%;
             }
             
             .mobile-menu {
@@ -415,6 +666,51 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
+            }
+            
+            .nav-main {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-main.show {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-item > a {
+                padding: 0.8rem 1.5rem;
+                justify-content: space-between;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: rgba(0, 0, 0, 0.1);
+                width: 100%;
+                margin-top: 0;
+            }
+            
+            .dropdown-menu a {
+                padding-left: 2.5rem;
+            }
+            
+            .hero {
+                padding: 4rem 0 3rem;
             }
             
             .hero h1 {
@@ -428,43 +724,113 @@
             .btn {
                 display: block;
                 width: 100%;
-                margin-bottom: 10px;
+                margin-bottom: 12px;
             }
             
             .btn-outline {
                 margin-left: 0;
             }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        /* Focus styles for accessibility */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to main content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1001;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .skip-link:focus {
+            top: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header - Enhanced with Sticky Behavior and Dropdowns -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
                     </div>
                     <div>
                         <div class="logo-text">AI-Stat Journal</div>
                         <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
                     </div>
                 </div>
+                
                 <nav>
-                    <ul>
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="ai-policy.html">AI Policy</a></li>
-                        <li><a href="submit.html">Submit</a></li>
-                        <li><a href="archives.html">Archives</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
+                    <div class="nav-container">
+                        <ul class="nav-main">
+                            <li class="nav-item">
+                                <a href="index.html" class="active">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="about.html">About <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="about.html">About the Journal</a></li>
+                                    <li><a href="editorial-board.html">Editorial Board</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="ai-policy.html">Policies <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                                    <li><a href="#">Peer Review Process</a></li>
+                                    <li><a href="#">Open Access Statement</a></li>
+                                    <li><a href="#">Publication Ethics</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="submit.html">Submit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="archives.html">Archives</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="reviewers.html">For Reviewers</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="search-container">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search articles, authors..." aria-label="Search">
+                                <button type="button" aria-label="Search">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
+                
+                <button class="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -472,160 +838,176 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Where Statistics Meets Artificial Intelligence</h1>
-            <p>An open-access, peer-reviewed journal publishing high-quality research in statistics, data science, and AI-assisted analytics.</p>
-            <a href="submit.html" class="btn">Submit Your Paper</a>
-            <a href="archives.html" class="btn btn-outline">Browse Current Issue</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About the Journal</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Mission & Scope</h3>
-                    <p>AI-Stat Journal pioneers the integration of statistical methods with artificial intelligence, focusing on innovative applications and theoretical advances.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock-open"></i>
-                    </div>
-                    <h3>Open Access</h3>
-                    <p>All articles are freely available to read, download, and share, promoting the widespread dissemination of research findings.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>AI Co-Authorship</h3>
-                    <p>We recognize transparent and ethical AI contributions in scientific research with our innovative AI co-authorship policy.</p>
+            <div class="hero-content">
+                <h1>Where Statistics Meets Artificial Intelligence</h1>
+                <p>An open-access, peer-reviewed journal publishing high-quality research in statistics, data science, and AI-assisted analytics.</p>
+                <div>
+                    <a href="submit.html" class="btn">Submit Your Paper</a>
+                    <a href="archives.html" class="btn btn-outline">Browse Current Issue</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Workflow Section -->
-    <section id="workflow">
-        <div class="container">
-            <div class="section-title">
-                <h2>Submission & Publication Workflow</h2>
-            </div>
-            <div class="workflow-container">
-                <div class="workflow">
-                    <div class="workflow-step">
-                        <div class="step-circle">1</div>
-                        <div class="step-arrow"></div>
-                        <div class="step-content">
-                            <h4>Author Login/Register</h4>
-                            <p>Authors create an account or log in to the submission system.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-step">
-                        <div class="step-circle">2</div>
-                        <div class="step-arrow"></div>
-                        <div class="step-content">
-                            <h4>Submit Manuscript</h4>
-                            <p>Upload manuscript with AI declaration and supplementary materials.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-step">
-                        <div class="step-circle">3</div>
-                        <div class="step-arrow"></div>
-                        <div class="step-content">
-                            <h4>Editor Initial Check</h4>
-                            <p>Scope, format, and plagiarism verification by editorial team.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-step">
-                        <div class="step-circle">4</div>
-                        <div class="step-arrow"></div>
-                        <div class="step-content">
-                            <h4>Peer Review</h4>
-                            <p>Double-blind review by domain experts (Accept/Revise/Reject).</p>
-                        </div>
-                    </div>
-                    <div class="workflow-step">
-                        <div class="step-circle">5</div>
-                        <div class="step-arrow"></div>
-                        <div class="step-content">
-                            <h4>Final Decision</h4>
-                            <p>Editorial decision based on reviewer feedback and manuscript quality.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-step">
-                        <div class="step-circle">6</div>
-                        <div class="step-content">
-                            <h4>Publication</h4>
-                            <p>Accepted papers are formatted, assigned DOI, and published online.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Loading Indicator -->
+    <div class="loading" id="loading-indicator">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Loading content...</p>
+    </div>
 
-    <!-- AI Policy Section -->
-    <section id="ai-policy">
-        <div class="container">
-            <div class="section-title">
-                <h2>AI Co-Authorship Policy</h2>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>About the Journal</h2>
+                    <p>Pioneering the integration of statistical methods with artificial intelligence for innovative applications and theoretical advances</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye" aria-hidden="true"></i>
+                        </div>
+                        <h3>Mission & Scope</h3>
+                        <p>AI-Stat Journal pioneers the integration of statistical methods with artificial intelligence, focusing on innovative applications and theoretical advances.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock-open" aria-hidden="true"></i>
+                        </div>
+                        <h3>Open Access</h3>
+                        <p>All articles are freely available to read, download, and share, promoting the widespread dissemination of research findings.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                        <h3>AI Co-Authorship</h3>
+                        <p>We recognize transparent and ethical AI contributions in scientific research with our innovative AI co-authorship policy.</p>
+                    </div>
+                </div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Transparency</h3>
-                    <p>Authors must declare AI assistance in methodology, writing, or analysis with specific model names and version numbers.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3>Accountability</h3>
-                    <p>AI cannot assume accountability — human authors remain responsible for all content, analysis, and ethical compliance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-                    <h3>Compliance</h3>
-                    <p>All AI-assisted content must pass our integrity checker and adhere to ethical guidelines for AI use in research.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>24</h3>
-                    <p>Days Average Review Time</p>
+        <!-- Workflow Section -->
+        <section id="workflow">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Submission & Publication Workflow</h2>
+                    <p>Our streamlined process ensures efficient and transparent handling of your manuscript</p>
                 </div>
-                <div class="stat-item">
-                    <h3>68%</h3>
-                    <p>Acceptance Rate</p>
-                </div>
-                <div class="stat-item">
-                    <h3>42%</h3>
-                    <p>Papers with AI Co-Authorship</p>
-                </div>
-                <div class="stat-item">
-                    <h3>15+</h3>
-                    <p>Indexing Databases</p>
+                <div class="workflow-container">
+                    <div class="workflow">
+                        <div class="workflow-step">
+                            <div class="step-circle">1</div>
+                            <div class="step-arrow" aria-hidden="true"></div>
+                            <div class="step-content">
+                                <h4>Author Login/Register</h4>
+                                <p>Authors create an account or log in to the submission system.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-circle">2</div>
+                            <div class="step-arrow" aria-hidden="true"></div>
+                            <div class="step-content">
+                                <h4>Submit Manuscript</h4>
+                                <p>Upload manuscript with AI declaration and supplementary materials.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-circle">3</div>
+                            <div class="step-arrow" aria-hidden="true"></div>
+                            <div class="step-content">
+                                <h4>Editor Initial Check</h4>
+                                <p>Scope, format, and plagiarism verification by editorial team.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-circle">4</div>
+                            <div class="step-arrow" aria-hidden="true"></div>
+                            <div class="step-content">
+                                <h4>Peer Review</h4>
+                                <p>Double-blind review by domain experts (Accept/Revise/Reject).</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-circle">5</div>
+                            <div class="step-arrow" aria-hidden="true"></div>
+                            <div class="step-content">
+                                <h4>Final Decision</h4>
+                                <p>Editorial decision based on reviewer feedback and manuscript quality.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-circle">6</div>
+                            <div class="step-content">
+                                <h4>Publication</h4>
+                                <p>Accepted papers are formatted, assigned DOI, and published online.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- AI Policy Section -->
+        <section id="ai-policy">
+            <div class="container">
+                <div class="section-title">
+                    <h2>AI Co-Authorship Policy</h2>
+                    <p>Our innovative approach to recognizing AI contributions while maintaining academic integrity</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </div>
+                        <h3>Transparency</h3>
+                        <p>Authors must declare AI assistance in methodology, writing, or analysis with specific model names and version numbers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-balance-scale" aria-hidden="true"></i>
+                        </div>
+                        <h3>Accountability</h3>
+                        <p>AI cannot assume accountability — human authors remain responsible for all content, analysis, and ethical compliance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                        </div>
+                        <h3>Compliance</h3>
+                        <p>All AI-assisted content must pass our integrity checker and adhere to ethical guidelines for AI use in research.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>24</h3>
+                        <p>Days Average Review Time</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>68%</h3>
+                        <p>Acceptance Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>42%</h3>
+                        <p>Papers with AI Co-Authorship</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15+</h3>
+                        <p>Indexing Databases</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -639,29 +1021,29 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About the Journal</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="submit.html">Submit Manuscript</a></li>
-                        <li><a href="archives.html">Current Issue</a></li>
+                        <li><a href="index.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle" aria-hidden="true"></i> About the Journal</a></li>
+                        <li><a href="editorial-board.html"><i class="fas fa-users" aria-hidden="true"></i> Editorial Board</a></li>
+                        <li><a href="submit.html"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Manuscript</a></li>
+                        <li><a href="archives.html"><i class="fas fa-book-open" aria-hidden="true"></i> Current Issue</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Policies</h3>
                     <ul class="footer-links">
-                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
-                        <li><a href="#">Peer Review Process</a></li>
-                        <li><a href="#">Open Access Statement</a></li>
-                        <li><a href="#">Publication Ethics</a></li>
-                        <li><a href="#">Copyright Notice</a></li>
+                        <li><a href="ai-policy.html"><i class="fas fa-robot" aria-hidden="true"></i> AI Co-Authorship Policy</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Peer Review Process</a></li>
+                        <li><a href="#"><i class="fas fa-lock-open" aria-hidden="true"></i> Open Access Statement</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale" aria-hidden="true"></i> Publication Ethics</a></li>
+                        <li><a href="#"><i class="fas fa-copyright" aria-hidden="true"></i> Copyright Notice</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                        <li><a href="mailto:editor@aistatjournal.org"><i class="fas fa-envelope" aria-hidden="true"></i> editor@aistatjournal.org</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone" aria-hidden="true"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 123 Research Avenue, Science Park, ST 12345</a></li>
                     </ul>
                 </div>
             </div>
@@ -671,11 +1053,105 @@
         </div>
     </footer>
 
+    <!-- Google Analytics (Placeholder) -->
+    <script>
+        // Google Analytics tracking code would go here
+        // For example:
+        // window.dataLayer = window.dataLayer || [];
+        // function gtag(){dataLayer.push(arguments);}
+        // gtag('js', new Date());
+        // gtag('config', 'GA_TRACKING_ID');
+    </script>
+
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+            document.querySelector('.nav-main').classList.toggle('show');
+            this.setAttribute('aria-expanded', 
+                this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
         });
+
+        // Search functionality
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box input').value;
+            if (searchTerm.trim()) {
+                // Show loading indicator
+                document.getElementById('loading-indicator').style.display = 'block';
+                
+                // Simulate search (in a real implementation, this would be an API call)
+                setTimeout(() => {
+                    document.getElementById('loading-indicator').style.display = 'none';
+                    alert(`Searching for: ${searchTerm}. This would display results in a real implementation.`);
+                }, 1500);
+            }
+        });
+
+        // Form validation example (for forms on other pages)
+        function validateForm(form) {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--accent)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            // Tab key navigation
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateY(10px)';
+                });
+            }
+        });
+
+        // Enhanced dropdown behavior for touch devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.nav-item > a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('dropdown-menu')) {
+                        e.preventDefault();
+                        const dropdown = this.nextElementSibling;
+                        const isOpen = dropdown.style.opacity === '1';
+                        
+                        // Close all dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                            menu.style.transform = 'translateY(10px)';
+                        });
+                        
+                        // Open this dropdown if it was closed
+                        if (!isOpen) {
+                            dropdown.style.opacity = '1';
+                            dropdown.style.visibility = 'visible';
+                            dropdown.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>

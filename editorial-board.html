@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editorial Board - AI-Stat Journal</title>
+    <meta name="description" content="Meet the editorial board members of AI-Stat Journal - internationally recognized experts in statistics and AI">
+    <meta name="keywords" content="editorial board, editors, reviewers, editorial team, journal leadership">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #1a2530;
             --success: #27ae60;
             --warning: #f39c12;
+            --gray: #6c757d;
+            --border: #dee2e6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
         }
         
         .container {
@@ -36,31 +49,34 @@
             padding: 0 15px;
         }
         
-        /* Header Styles */
+        /* Header Styles - Enhanced Sticky Header */
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .logo-icon {
             font-size: 2.5rem;
-            margin-right: 10px;
+            margin-right: 12px;
             color: var(--secondary);
         }
         
@@ -70,38 +86,54 @@
         }
         
         .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: -5px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: -3px;
         }
         
-        nav ul {
+        /* Enhanced Navigation with Dropdowns */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-main {
             display: flex;
             list-style: none;
         }
         
-        nav ul li {
-            margin-left: 1.5rem;
+        .nav-item {
+            position: relative;
+            margin-left: 1.2rem;
         }
         
-        nav ul li a {
+        .nav-item > a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 0;
-            position: relative;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        nav ul li a:hover {
+        .nav-item > a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-item > a.active {
             color: var(--secondary);
         }
         
-        nav ul li a.active {
-            color: var(--secondary);
-        }
-        
-        nav ul li a.active::after {
+        .nav-item > a.active::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -111,44 +143,156 @@
             background-color: var(--secondary);
         }
         
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown-menu li {
+            list-style: none;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light);
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            width: 180px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+        }
+        
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            color: white;
         }
         
         /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0 3rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
         }
         
         .page-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
+        /* Breadcrumb */
         .breadcrumb {
             display: flex;
             justify-content: center;
             list-style: none;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
         .breadcrumb li {
             margin: 0 5px;
+            font-size: 0.9rem;
         }
         
         .breadcrumb li a {
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb li a:hover {
+            color: white;
         }
         
         .breadcrumb li:after {
-            content: ">";
+            content: "›";
             margin-left: 10px;
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.5);
         }
         
         .breadcrumb li:last-child:after {
@@ -186,33 +330,36 @@
         
         /* Board Styles */
         .board-category {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
         
         .board-category h3 {
             color: var(--primary);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.8rem;
             border-bottom: 2px solid var(--secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
         }
         
         .board-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .board-member {
             background-color: white;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 2rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            height: 100%;
         }
         
         .board-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
         }
         
         .member-photo {
@@ -220,57 +367,102 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
             display: block;
             border: 3px solid var(--light);
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
         }
         
         .member-name {
-            text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
         
         .member-title {
-            text-align: center;
             color: var(--secondary);
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
         
         .member-affiliation {
-            text-align: center;
             font-style: italic;
             margin-bottom: 1rem;
-            color: #666;
+            color: var(--gray);
         }
         
         .member-expertise {
-            text-align: center;
             font-size: 0.9rem;
-            color: #777;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Focus styles for accessibility */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to main content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1001;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .skip-link:focus {
+            top: 0;
         }
         
         /* Footer */
         footer {
-            background-color: #1a2530;
+            background-color: var(--dark);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1.5rem;
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
         
         .footer-column h3 {
             color: var(--secondary);
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
         .footer-links {
@@ -285,6 +477,9 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .footer-links a:hover {
@@ -293,7 +488,7 @@
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid #34495e;
             color: #95a5a6;
             font-size: 0.9rem;
@@ -302,26 +497,42 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-wrap: wrap;
             }
             
             .logo {
                 margin-bottom: 1rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
                 width: 100%;
-                display: none;
+                justify-content: center;
             }
             
-            nav ul.show {
-                display: flex;
+            .nav-container {
+                width: 100%;
+                justify-content: center;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            .nav-main {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 0.3rem;
+            }
+            
+            .search-container {
+                margin: 1rem 0 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-box input {
+                width: 100%;
             }
             
             .mobile-menu {
@@ -329,6 +540,47 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
+            }
+            
+            .nav-main {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-main.show {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-item > a {
+                padding: 0.8rem 1.5rem;
+                justify-content: space-between;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: rgba(0, 0, 0, 0.1);
+                width: 100%;
+                margin-top: 0;
+            }
+            
+            .dropdown-menu a {
+                padding-left: 2.5rem;
             }
             
             .page-header h1 {
@@ -342,33 +594,71 @@
     </style>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
                     </div>
                     <div>
                         <div class="logo-text">AI-Stat Journal</div>
                         <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
                     </div>
                 </div>
+                
                 <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="editorial-board.html" class="active">Editorial Board</a></li>
-                        <li><a href="ai-policy.html">AI Policy</a></li>
-                        <li><a href="submit.html">Submit</a></li>
-                        <li><a href="archives.html">Archives</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
+                    <div class="nav-container">
+                        <ul class="nav-main">
+                            <li class="nav-item">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="about.html">About <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="about.html">About the Journal</a></li>
+                                    <li><a href="editorial-board.html">Editorial Board</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="ai-policy.html">Policies <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                                    <li><a href="#">Peer Review Process</a></li>
+                                    <li><a href="#">Open Access Statement</a></li>
+                                    <li><a href="#">Publication Ethics</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="submit.html">Submit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="archives.html">Archives</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="reviewers.html">For Reviewers</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="search-container">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search articles, authors..." aria-label="Search">
+                                <button type="button" aria-label="Search">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
+                
+                <button class="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -385,131 +675,133 @@
     </section>
 
     <!-- Editorial Board Content -->
-    <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Editorial Team</h2>
-                <p>Internationally recognized experts guiding the journal's vision and maintaining academic excellence</p>
-            </div>
-            
-            <div class="board-category">
-                <h3>Editor-in-Chief</h3>
-                <div class="board-grid">
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
+    <main id="main-content">
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Editorial Team</h2>
+                    <p>Internationally recognized experts guiding the journal's vision and maintaining academic excellence</p>
+                </div>
+                
+                <div class="board-category">
+                    <h3>Editor-in-Chief</h3>
+                    <div class="board-grid">
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Ahmed Ali AlRadaideh</div>
+                            <div class="member-title">Editor-in-Chief</div>
+                            <div class="member-affiliation">Salento University, Italy</div>
+                            <div class="member-expertise">Statistical Learning, Bayesian Methods, AI Ethics</div>
                         </div>
-                        <div class="member-name">Dr. Ahmed Ali AlRadaideh</div>
-                        <div class="member-title">Editor-in-Chief</div>
-                        <div class="member-affiliation">Salento University. Italy</div>
-                        <div class="member-expertise">Statistical Learning, Bayesian Methods, AI Ethics</div>
+                    </div>
+                </div>
+                
+                <div class="board-category">
+                    <h3>Associate Editors</h3>
+                    <div class="board-grid">
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Michael Chen</div>
+                            <div class="member-title">Associate Editor</div>
+                            <div class="member-affiliation">MIT, USA</div>
+                            <div class="member-expertise">Machine Learning, Deep Learning, Computational Statistics</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Sarah Johnson</div>
+                            <div class="member-title">Associate Editor</div>
+                            <div class="member-affiliation">University of Oxford, UK</div>
+                            <div class="member-expertise">Bayesian Statistics, Causal Inference, Health Analytics</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Kenji Tanaka</div>
+                            <div class="member-title">Associate Editor</div>
+                            <div class="member-affiliation">University of Tokyo, Japan</div>
+                            <div class="member-expertise">Time Series Analysis, Financial Statistics, AI Applications</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-category">
+                    <h3>Editorial Board Members</h3>
+                    <div class="board-grid">
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Maria Garcia</div>
+                            <div class="member-affiliation">University of Barcelona, Spain</div>
+                            <div class="member-expertise">Spatial Statistics, Environmental Modeling</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. James Wilson</div>
+                            <div class="member-affiliation">University of Toronto, Canada</div>
+                            <div class="member-expertise">Experimental Design, Industrial Statistics</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Li Wei</div>
+                            <div class="member-affiliation">Tsinghua University, China</div>
+                            <div class="member-expertise">High-Dimensional Statistics, Network Analysis</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Anna Schmidt</div>
+                            <div class="member-affiliation">Technical University of Berlin, Germany</div>
+                            <div class="member-expertise">Statistical Computing, Optimization Algorithms</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Robert Kim</div>
+                            <div class="member-affiliation">University of Melbourne, Australia</div>
+                            <div class="member-expertise">Biostatistics, Clinical Trials, Medical AI</div>
+                        </div>
+                        
+                        <div class="board-member">
+                            <div class="member-photo">
+                                <i class="fas fa-user" style="font-size: 3rem;" aria-hidden="true"></i>
+                            </div>
+                            <div class="member-name">Dr. Fatima Ahmed</div>
+                            <div class="member-affiliation">Cairo University, Egypt</div>
+                            <div class="member-expertise">Survey Methodology, Social Statistics</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="board-category">
+                    <h3>Join Our Team</h3>
+                    <div style="background-color: white; border-radius: 8px; padding: 2.5rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                        <p>We are always looking for qualified experts to join our editorial board and reviewer panel. If you are interested in contributing to the journal as an editor or reviewer, please contact us with your CV and areas of expertise.</p>
+                        <a href="contact.html" class="btn" style="margin-top: 1.5rem; display: inline-block;">Apply to Join</a>
                     </div>
                 </div>
             </div>
-            
-            <div class="board-category">
-                <h3>Associate Editors</h3>
-                <div class="board-grid">
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Michael Chen</div>
-                        <div class="member-title">Associate Editor</div>
-                        <div class="member-affiliation">MIT, USA</div>
-                        <div class="member-expertise">Machine Learning, Deep Learning, Computational Statistics</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Sarah Johnson</div>
-                        <div class="member-title">Associate Editor</div>
-                        <div class="member-affiliation">University of Oxford, UK</div>
-                        <div class="member-expertise">Bayesian Statistics, Causal Inference, Health Analytics</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Kenji Tanaka</div>
-                        <div class="member-title">Associate Editor</div>
-                        <div class="member-affiliation">University of Tokyo, Japan</div>
-                        <div class="member-expertise">Time Series Analysis, Financial Statistics, AI Applications</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="board-category">
-                <h3>Editorial Board Members</h3>
-                <div class="board-grid">
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Maria Garcia</div>
-                        <div class="member-affiliation">University of Barcelona, Spain</div>
-                        <div class="member-expertise">Spatial Statistics, Environmental Modeling</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. James Wilson</div>
-                        <div class="member-affiliation">University of Toronto, Canada</div>
-                        <div class="member-expertise">Experimental Design, Industrial Statistics</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Li Wei</div>
-                        <div class="member-affiliation">Tsinghua University, China</div>
-                        <div class="member-expertise">High-Dimensional Statistics, Network Analysis</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Anna Schmidt</div>
-                        <div class="member-affiliation">Technical University of Berlin, Germany</div>
-                        <div class="member-expertise">Statistical Computing, Optimization Algorithms</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Robert Kim</div>
-                        <div class="member-affiliation">University of Melbourne, Australia</div>
-                        <div class="member-expertise">Biostatistics, Clinical Trials, Medical AI</div>
-                    </div>
-                    
-                    <div class="board-member">
-                        <div class="member-photo" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user" style="font-size: 3rem; color: #999;"></i>
-                        </div>
-                        <div class="member-name">Dr. Fatima Ahmed</div>
-                        <div class="member-affiliation">Cairo University, Egypt</div>
-                        <div class="member-expertise">Survey Methodology, Social Statistics</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="board-category">
-                <h3>Join Our Team</h3>
-                <div style="background-color: white; border-radius: 8px; padding: 2rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
-                    <p>We are always looking for qualified experts to join our editorial board and reviewer panel. If you are interested in contributing to the journal as an editor or reviewer, please contact us with your CV and areas of expertise.</p>
-                    <a href="contact.html" class="btn" style="display: inline-block; background-color: var(--secondary); color: white; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: all 0.3s; margin-top: 1rem;">Apply to Join</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -523,29 +815,29 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About the Journal</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="submit.html">Submit Manuscript</a></li>
-                        <li><a href="archives.html">Current Issue</a></li>
+                        <li><a href="index.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle" aria-hidden="true"></i> About the Journal</a></li>
+                        <li><a href="editorial-board.html"><i class="fas fa-users" aria-hidden="true"></i> Editorial Board</a></li>
+                        <li><a href="submit.html"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Manuscript</a></li>
+                        <li><a href="archives.html"><i class="fas fa-book-open" aria-hidden="true"></i> Current Issue</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Policies</h3>
                     <ul class="footer-links">
-                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
-                        <li><a href="#">Peer Review Process</a></li>
-                        <li><a href="#">Open Access Statement</a></li>
-                        <li><a href="#">Publication Ethics</a></li>
-                        <li><a href="#">Copyright Notice</a></li>
+                        <li><a href="ai-policy.html"><i class="fas fa-robot" aria-hidden="true"></i> AI Co-Authorship Policy</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Peer Review Process</a></li>
+                        <li><a href="#"><i class="fas fa-lock-open" aria-hidden="true"></i> Open Access Statement</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale" aria-hidden="true"></i> Publication Ethics</a></li>
+                        <li><a href="#"><i class="fas fa-copyright" aria-hidden="true"></i> Copyright Notice</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                        <li><a href="mailto:editor@aistatjournal.org"><i class="fas fa-envelope" aria-hidden="true"></i> editor@aistatjournal.org</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone" aria-hidden="true"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 123 Research Avenue, Science Park, ST 12345</a></li>
                     </ul>
                 </div>
             </div>
@@ -558,8 +850,64 @@
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+            document.querySelector('.nav-main').classList.toggle('show');
+            this.setAttribute('aria-expanded', 
+                this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
         });
+
+        // Search functionality
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box input').value;
+            if (searchTerm.trim()) {
+                // In a real implementation, this would redirect to search results
+                window.location.href = `archives.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+
+        // Allow pressing Enter in search box
+        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-box button').click();
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateY(10px)';
+                });
+            }
+        });
+
+        // Enhanced dropdown behavior for touch devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.nav-item > a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('dropdown-menu')) {
+                        e.preventDefault();
+                        const dropdown = this.nextElementSibling;
+                        const isOpen = dropdown.style.opacity === '1';
+                        
+                        // Close all dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                            menu.style.transform = 'translateY(10px)';
+                        });
+                        
+                        // Open this dropdown if it was closed
+                        if (!isOpen) {
+                            dropdown.style.opacity = '1';
+                            dropdown.style.visibility = 'visible';
+                            dropdown.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>

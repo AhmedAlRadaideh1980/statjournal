@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - AI-Stat Journal</title>
+    <meta name="description" content="Contact the editorial team of AI-Stat Journal with questions about submissions, policies, or general inquiries">
+    <meta name="keywords" content="contact, email, phone, address, editorial office, journal contact">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --dark: #1a2530;
             --success: #27ae60;
             --warning: #f39c12;
+            --gray: #6c757d;
+            --border: #dee2e6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #f9f9f9;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1rem;
         }
         
         .container {
@@ -36,31 +49,34 @@
             padding: 0 15px;
         }
         
-        /* Header Styles */
+        /* Header Styles - Enhanced Sticky Header */
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
         
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .logo-icon {
             font-size: 2.5rem;
-            margin-right: 10px;
+            margin-right: 12px;
             color: var(--secondary);
         }
         
@@ -70,38 +86,54 @@
         }
         
         .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: -5px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: -3px;
         }
         
-        nav ul {
+        /* Enhanced Navigation with Dropdowns */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-main {
             display: flex;
             list-style: none;
         }
         
-        nav ul li {
-            margin-left: 1.5rem;
+        .nav-item {
+            position: relative;
+            margin-left: 1.2rem;
         }
         
-        nav ul li a {
+        .nav-item > a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 0;
-            position: relative;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        nav ul li a:hover {
+        .nav-item > a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-item > a.active {
             color: var(--secondary);
         }
         
-        nav ul li a.active {
-            color: var(--secondary);
-        }
-        
-        nav ul li a.active::after {
+        .nav-item > a.active::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -111,44 +143,156 @@
             background-color: var(--secondary);
         }
         
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown-menu li {
+            list-style: none;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light);
+            color: var(--secondary);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            width: 180px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+        }
+        
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+        
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            color: white;
         }
         
         /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2530 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0 3rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
         }
         
         .page-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
+        /* Breadcrumb */
         .breadcrumb {
             display: flex;
             justify-content: center;
             list-style: none;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
         }
         
         .breadcrumb li {
             margin: 0 5px;
+            font-size: 0.9rem;
         }
         
         .breadcrumb li a {
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb li a:hover {
+            color: white;
         }
         
         .breadcrumb li:after {
-            content: ">";
+            content: "›";
             margin-left: 10px;
-            color: var(--light);
+            color: rgba(255, 255, 255, 0.5);
         }
         
         .breadcrumb li:last-child:after {
@@ -194,15 +338,27 @@
         .contact-info {
             background-color: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .contact-form {
             background-color: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .contact-item {
@@ -222,6 +378,7 @@
             margin-right: 1rem;
             color: var(--secondary);
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
         
         .contact-details h3 {
@@ -230,7 +387,7 @@
         }
         
         .contact-details p {
-            color: #666;
+            color: var(--gray);
         }
         
         .form-group {
@@ -249,10 +406,11 @@
         .form-group textarea {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border);
             border-radius: 4px;
             font-size: 1rem;
             transition: border 0.3s;
+            font-family: 'Inter', sans-serif;
         }
         
         .form-group input:focus,
@@ -260,6 +418,7 @@
         .form-group textarea:focus {
             border-color: var(--secondary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .form-group textarea {
@@ -285,7 +444,7 @@
             display: inline-block;
             background-color: var(--secondary);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
@@ -298,7 +457,7 @@
         .btn:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         .btn-block {
@@ -309,7 +468,7 @@
         .office-hours {
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border);
         }
         
         .office-hours h3 {
@@ -324,7 +483,7 @@
         
         .hours-table td {
             padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border);
         }
         
         .hours-table td:last-child {
@@ -365,12 +524,12 @@
         }
         
         .map-placeholder {
-            background-color: #e9ecef;
+            background-color: var(--light);
             height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6c757d;
+            color: var(--gray);
             font-size: 1.1rem;
         }
         
@@ -403,7 +562,7 @@
         
         .faq-answer {
             margin-top: 1rem;
-            color: #666;
+            color: var(--gray);
             display: none;
         }
         
@@ -419,24 +578,65 @@
             transition: transform 0.3s;
         }
         
+        /* Form Validation Styles */
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: var(--accent);
+        }
+        
+        .error-message {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+        }
+        
+        /* Focus styles for accessibility */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--secondary);
+            outline-offset: 2px;
+        }
+        
+        /* Skip to main content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1001;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
         /* Footer */
         footer {
-            background-color: #1a2530;
+            background-color: var(--dark);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1.5rem;
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
         
         .footer-column h3 {
             color: var(--secondary);
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
         .footer-links {
@@ -451,6 +651,9 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .footer-links a:hover {
@@ -459,7 +662,7 @@
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid #34495e;
             color: #95a5a6;
             font-size: 0.9rem;
@@ -468,26 +671,42 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-wrap: wrap;
             }
             
             .logo {
                 margin-bottom: 1rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
                 width: 100%;
-                display: none;
+                justify-content: center;
             }
             
-            nav ul.show {
-                display: flex;
+            .nav-container {
+                width: 100%;
+                justify-content: center;
             }
             
-            nav ul li {
-                margin: 0.5rem 0;
+            .nav-main {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 0.3rem;
+            }
+            
+            .search-container {
+                margin: 1rem 0 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-box input {
+                width: 100%;
             }
             
             .mobile-menu {
@@ -495,6 +714,47 @@
                 position: absolute;
                 top: 1rem;
                 right: 1rem;
+            }
+            
+            .nav-main {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--primary);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-main.show {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-item > a {
+                padding: 0.8rem 1.5rem;
+                justify-content: space-between;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background-color: rgba(0, 0, 0, 0.1);
+                width: 100%;
+                margin-top: 0;
+            }
+            
+            .dropdown-menu a {
+                padding-left: 2.5rem;
             }
             
             .page-header h1 {
@@ -513,33 +773,71 @@
     </style>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
                     </div>
                     <div>
                         <div class="logo-text">AI-Stat Journal</div>
                         <div class="logo-subtitle">Journal of Applied Statistics and Intelligent Analytics</div>
                     </div>
                 </div>
+                
                 <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="ai-policy.html">AI Policy</a></li>
-                        <li><a href="submit.html">Submit</a></li>
-                        <li><a href="archives.html">Archives</a></li>
-                        <li><a href="contact.html" class="active">Contact</a></li>
-                    </ul>
+                    <div class="nav-container">
+                        <ul class="nav-main">
+                            <li class="nav-item">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="about.html">About <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="about.html">About the Journal</a></li>
+                                    <li><a href="editorial-board.html">Editorial Board</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="ai-policy.html">Policies <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
+                                    <li><a href="#">Peer Review Process</a></li>
+                                    <li><a href="#">Open Access Statement</a></li>
+                                    <li><a href="#">Publication Ethics</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="submit.html">Submit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="archives.html">Archives</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="reviewers.html">For Reviewers</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="search-container">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search articles, authors..." aria-label="Search">
+                                <button type="button" aria-label="Search">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
+                
+                <button class="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -556,195 +854,202 @@
     </section>
 
     <!-- Contact Content -->
-    <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>We're here to answer your questions and assist with your submissions</p>
-            </div>
-            
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <p>editor@aistatjournal.org</p>
-                            <p>submissions@aistatjournal.org</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Phone</h3>
-                            <p>+1 (555) 123-4567</p>
-                            <p>Mon-Fri, 9:00 AM - 5:00 PM EST</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Address</h3>
-                            <p>123 Research Avenue</p>
-                            <p>Science Park, ST 12345</p>
-                            <p>United States</p>
-                        </div>
-                    </div>
-                    
-                    <div class="office-hours">
-                        <h3>Office Hours</h3>
-                        <table class="hours-table">
-                            <tr>
-                                <td>Monday - Thursday</td>
-                                <td>9:00 AM - 5:00 PM</td>
-                            </tr>
-                            <tr>
-                                <td>Friday</td>
-                                <td>9:00 AM - 4:00 PM</td>
-                            </tr>
-                            <tr>
-                                <td>Saturday - Sunday</td>
-                                <td>Closed</td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-orcid"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <h3>Send Us a Message</h3>
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="first-name" class="required">First Name</label>
-                                <input type="text" id="first-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name" class="required">Last Name</label>
-                                <input type="text" id="last-name" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="required">Email</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" class="required">Subject</label>
-                            <select id="subject" required>
-                                <option value="">Select a subject</option>
-                                <option value="submission">Manuscript Submission</option>
-                                <option value="status">Submission Status Inquiry</option>
-                                <option value="reviewer">Reviewer Application</option>
-                                <option value="technical">Technical Issue</option>
-                                <option value="ai-policy">AI Policy Question</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="required">Message</label>
-                            <textarea id="message" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-block">Send Message</button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Map -->
-            <div class="map-container">
-                <div class="map-placeholder">
-                    <div>
-                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                        <p>Interactive Map Location</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- FAQ Section -->
-            <div class="faq-container">
+    <main id="main-content">
+        <section>
+            <div class="container">
                 <div class="section-title">
-                    <h2>Frequently Asked Questions</h2>
+                    <h2>Get In Touch</h2>
+                    <p>We're here to answer your questions and assist with your submissions</p>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How long does the review process typically take?</span>
-                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <p><a href="mailto:editor@aistatjournal.org">editor@aistatjournal.org</a></p>
+                                <p><a href="mailto:submissions@aistatjournal.org">submissions@aistatjournal.org</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Phone</h3>
+                                <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                                <p>Mon-Fri, 9:00 AM - 5:00 PM EST</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Address</h3>
+                                <p>123 Research Avenue</p>
+                                <p>Science Park, ST 12345</p>
+                                <p>United States</p>
+                            </div>
+                        </div>
+                        
+                        <div class="office-hours">
+                            <h3>Office Hours</h3>
+                            <table class="hours-table">
+                                <tr>
+                                    <td>Monday - Thursday</td>
+                                    <td>9:00 AM - 5:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td>Friday</td>
+                                    <td>9:00 AM - 4:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td>Saturday - Sunday</td>
+                                    <td>Closed</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="ORCID">
+                                <i class="fab fa-orcid" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="faq-answer">
-                        <p>The typical review process takes 4-6 weeks from submission to initial decision. This includes initial editorial screening, peer review, and editorial decision. Complex manuscripts or those requiring major revisions may take longer.</p>
+                    
+                    <div class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <form id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name" class="required">First Name</label>
+                                    <input type="text" id="first-name" required>
+                                    <div class="error-message">Please enter your first name</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name" class="required">Last Name</label>
+                                    <input type="text" id="last-name" required>
+                                    <div class="error-message">Please enter your last name</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="required">Email</label>
+                                <input type="email" id="email" required>
+                                <div class="error-message">Please enter a valid email address</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" class="required">Subject</label>
+                                <select id="subject" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="submission">Manuscript Submission</option>
+                                    <option value="status">Submission Status Inquiry</option>
+                                    <option value="reviewer">Reviewer Application</option>
+                                    <option value="technical">Technical Issue</option>
+                                    <option value="ai-policy">AI Policy Question</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="error-message">Please select a subject</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="required">Message</label>
+                                <textarea id="message" required></textarea>
+                                <div class="error-message">Please enter your message</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-block">Send Message</button>
+                        </form>
                     </div>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you charge article processing fees?</span>
-                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>No, AI-Stat Journal is a platinum open access journal with no article processing charges (APCs) or submission fees. All articles are freely available to readers without any costs to authors.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How do I declare AI assistance in my manuscript?</span>
-                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Authors must declare all AI assistance in the dedicated section of the submission form. This includes specifying the AI model, version, provider, and describing the nature of assistance. Please refer to our <a href="ai-policy.html">AI Co-Authorship Policy</a> for detailed guidelines.</p>
+                <!-- Map -->
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <div>
+                            <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem;" aria-hidden="true"></i>
+                            <p>Interactive Map Location</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I submit a manuscript that is currently under review elsewhere?</span>
-                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                <!-- FAQ Section -->
+                <div class="faq-container">
+                    <div class="section-title">
+                        <h2>Frequently Asked Questions</h2>
                     </div>
-                    <div class="faq-answer">
-                        <p>No, we do not accept manuscripts that are currently under consideration at another journal. Simultaneous submission is considered a violation of publication ethics. You may submit to AI-Stat Journal only after receiving a formal rejection from another journal or withdrawing your submission.</p>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long does the review process typically take?</span>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The typical review process takes 4-6 weeks from submission to initial decision. This includes initial editorial screening, peer review, and editorial decision. Complex manuscripts or those requiring major revisions may take longer.</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How can I become a reviewer for the journal?</span>
-                        <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you charge article processing fees?</span>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, AI-Stat Journal is a platinum open access journal with no article processing charges (APCs) or submission fees. All articles are freely available to readers without any costs to authors.</p>
+                        </div>
                     </div>
-                    <div class="faq-answer">
-                        <p>We welcome applications from qualified researchers interested in joining our reviewer panel. Please contact us with your CV and areas of expertise, or indicate your interest when creating an author account in our submission system.</p>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I declare AI assistance in my manuscript?</span>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Authors must declare all AI assistance in the dedicated section of the submission form. This includes specifying the AI model, version, provider, and describing the nature of assistance. Please refer to our <a href="ai-policy.html">AI Co-Authorship Policy</a> for detailed guidelines.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I submit a manuscript that is currently under review elsewhere?</span>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, we do not accept manuscripts that are currently under consideration at another journal. Simultaneous submission is considered a violation of publication ethics. You may submit to AI-Stat Journal only after receiving a formal rejection from another journal or withdrawing your submission.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How can I become a reviewer for the journal?</span>
+                            <span class="faq-toggle"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We welcome applications from qualified researchers interested in joining our reviewer panel. Please contact us with your CV and areas of expertise, or indicate your interest when creating an author account in our submission system.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -758,29 +1063,29 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About the Journal</a></li>
-                        <li><a href="editorial-board.html">Editorial Board</a></li>
-                        <li><a href="submit.html">Submit Manuscript</a></li>
-                        <li><a href="archives.html">Current Issue</a></li>
+                        <li><a href="index.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle" aria-hidden="true"></i> About the Journal</a></li>
+                        <li><a href="editorial-board.html"><i class="fas fa-users" aria-hidden="true"></i> Editorial Board</a></li>
+                        <li><a href="submit.html"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Manuscript</a></li>
+                        <li><a href="archives.html"><i class="fas fa-book-open" aria-hidden="true"></i> Current Issue</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Policies</h3>
                     <ul class="footer-links">
-                        <li><a href="ai-policy.html">AI Co-Authorship Policy</a></li>
-                        <li><a href="#">Peer Review Process</a></li>
-                        <li><a href="#">Open Access Statement</a></li>
-                        <li><a href="#">Publication Ethics</a></li>
-                        <li><a href="#">Copyright Notice</a></li>
+                        <li><a href="ai-policy.html"><i class="fas fa-robot" aria-hidden="true"></i> AI Co-Authorship Policy</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check" aria-hidden="true"></i> Peer Review Process</a></li>
+                        <li><a href="#"><i class="fas fa-lock-open" aria-hidden="true"></i> Open Access Statement</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale" aria-hidden="true"></i> Publication Ethics</a></li>
+                        <li><a href="#"><i class="fas fa-copyright" aria-hidden="true"></i> Copyright Notice</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> editor@aistatjournal.org</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Research Avenue, Science Park, ST 12345</li>
+                        <li><a href="mailto:editor@aistatjournal.org"><i class="fas fa-envelope" aria-hidden="true"></i> editor@aistatjournal.org</a></li>
+                        <li><a href="tel:+15551234567"><i class="fas fa-phone" aria-hidden="true"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 123 Research Avenue, Science Park, ST 12345</a></li>
                     </ul>
                 </div>
             </div>
@@ -793,7 +1098,25 @@
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('show');
+            document.querySelector('.nav-main').classList.toggle('show');
+            this.setAttribute('aria-expanded', 
+                this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+        });
+
+        // Search functionality
+        document.querySelector('.search-box button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box input').value;
+            if (searchTerm.trim()) {
+                // In a real implementation, this would redirect to search results
+                window.location.href = `archives.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+
+        // Allow pressing Enter in search box
+        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-box button').click();
+            }
         });
 
         // FAQ toggle functionality
@@ -803,12 +1126,98 @@
             });
         });
 
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
+        // Form validation and submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will respond within 2 business days.');
-            this.reset();
+            
+            // Reset previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            
+            let isValid = true;
+            
+            // Validate required fields
+            const requiredFields = contactForm.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+            });
+            
+            // Validate email format
+            const emailField = document.getElementById('email');
+            if (emailField.value && !isValidEmail(emailField.value)) {
+                emailField.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show success message
+                alert('Thank you for your message! We will respond within 2 business days.');
+                contactForm.reset();
+            }
         });
+
+        // Real-time validation
+        contactForm.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.closest('.form-group').classList.add('error');
+                } else if (this.type === 'email' && this.value && !isValidEmail(this.value)) {
+                    this.closest('.form-group').classList.add('error');
+                } else {
+                    this.closest('.form-group').classList.remove('error');
+                }
+            });
+        });
+
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateY(10px)';
+                });
+            }
+        });
+
+        // Enhanced dropdown behavior for touch devices
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.nav-item > a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.nextElementSibling && this.nextElementSibling.classList.contains('dropdown-menu')) {
+                        e.preventDefault();
+                        const dropdown = this.nextElementSibling;
+                        const isOpen = dropdown.style.opacity === '1';
+                        
+                        // Close all dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                            menu.style.transform = 'translateY(10px)';
+                        });
+                        
+                        // Open this dropdown if it was closed
+                        if (!isOpen) {
+                            dropdown.style.opacity = '1';
+                            dropdown.style.visibility = 'visible';
+                            dropdown.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
